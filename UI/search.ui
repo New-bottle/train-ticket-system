@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>adminedit</class>
- <widget class="QDialog" name="adminedit">
+ <class>search</class>
+ <widget class="QDialog" name="search">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,72 +23,9 @@
       </font>
      </property>
      <property name="text">
-      <string>删除线路</string>
+      <string>游客查询</string>
      </property>
     </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>起始站</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBox">
-       <item>
-        <property name="text">
-         <string>北京</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>上海</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>西藏</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>终点站</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBox_2">
-       <item>
-        <property name="text">
-         <string>北京</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>出发时间</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBox_3"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_7">
-       <property name="text">
-        <string>按站查询</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -145,9 +82,72 @@
       <widget class="QComboBox" name="comboBox_6"/>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_8">
+      <widget class="QPushButton" name="pushButton_7">
        <property name="text">
         <string>按城市查询</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>起始站</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox">
+       <item>
+        <property name="text">
+         <string>北京</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>上海</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>西藏</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>终点站</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox_2">
+       <item>
+        <property name="text">
+         <string>北京</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>出发时间</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox_3"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_6">
+       <property name="text">
+        <string>按站查询</string>
        </property>
       </widget>
      </item>
@@ -160,14 +160,7 @@
        <item>
         <widget class="QPushButton" name="pushButton_2">
          <property name="text">
-          <string>回到主页</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="text">
-          <string>登出</string>
+          <string>用户注册</string>
          </property>
         </widget>
        </item>
@@ -177,21 +170,6 @@
       <widget class="QListWidget" name="listWidget">
        <item>
         <property name="text">
-         <string>北京-上海</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>成都-武汉</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>新建项目</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
          <string>新建项目</string>
         </property>
        </item>
@@ -202,21 +180,10 @@
        </item>
       </widget>
      </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
-      <widget class="QPushButton" name="pushButton_6">
-       <property name="text">
-        <string>删除</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>取消</string>
+      <widget class="QScrollBar" name="verticalScrollBar">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>

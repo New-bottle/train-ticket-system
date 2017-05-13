@@ -12,40 +12,56 @@
 #include "../../memory.hpp"
 #include "../../smart_ptr.hpp"
 
+#include <QDir>
+#include <cstdlib>
 
 /// Server
 namespace sjtu {
 class Server {
 private:
-    typedef map<int, user_ptr> UserContainer; //ID -> account find an account, insert, remove
-    typedef map<int, admin_ptr> AdminContainer; //ID -> account
-    typedef map<QString, line_ptr> LineContainer; //ID -> Line
-    typedef map<QString, city_ptr> CityContainer; //name -> City
-    typedef map<QString, station_ptr> StationContainer;
+	typedef map<int, user_ptr> UserContainer; //ID -> account find an account, insert, remove
+	typedef map<int, admin_ptr> AdminContainer; //ID -> account
+	typedef map<QString, line_ptr> LineContainer; //ID -> Line
+	typedef map<QString, city_ptr> CityContainer; //name -> City
+	typedef map<QString, station_ptr> StationContainer;
 //	typedef list<Log> LogContainer;
-    UserContainer     users;
-    AdminContainer    admins;
-    LineContainer     lines;
-    CityContainer     cities;
-    StationContainer  stations;
+	UserContainer     users;
+	AdminContainer    admins;
+	LineContainer     lines;
+	CityContainer     cities;
+	StationContainer  stations;
 //	LogContainer      logs;
 
 public:
-    bool check_city(const QString & name) const;
-    bool check_user(const int & ID) const;
-    bool check_admin(const int & ID) const;
-    bool check_station(const QString & name) const;
-    bool check_line(const QString & name) const;
+	bool check_city(const QString & name) const;
+	bool check_user(const int & ID) const;
+	bool check_admin(const int & ID) const;
+	bool check_station(const QString & name) const;
+	bool check_line(const QString & name) const;
 
-    city_ptr    find_city(const QString & name) const;
-    user_ptr    find_user(const int & ID) const;
-    admin_ptr   find_admin(const int & ID) const;
-    station_ptr find_station(const QString & name) const;
-    line_ptr    find_line(const QString & name) const;
+	city_ptr    find_city(const QString & name) const;
+	user_ptr    find_user(const int & ID) const;
+	admin_ptr   find_admin(const int & ID) const;
+	station_ptr find_station(const QString & name) const;
+	line_ptr    find_line(const QString & name) const;
 
-    bool add_line(const line_ptr & line);
-    bool add_station(const station_ptr & station);
-    bool add_city(const city_ptr & city);
+	bool add_line(const line_ptr & line);
+	bool add_station(const station_ptr & station);
+	bool add_city(const city_ptr & city);
+	bool add_user(const user_ptr & user);
+	bool add_admin(const admin_ptr & admin);
+
+public:
+	friend QDataStream& operator >> (QDataStream &in, Server &rhs) {
+		in >> rhs.users >> rhs.admins >> rhs.lines >> rhs.cities
+		   >> rhs.stations;
+		return in;
+	}
+	friend QDataStream& operator << (QDataStream &out, Server &rhs) {
+		out << rhs.users << rhs.admins << rhs.lines << rhs.cities
+			<< rhs.stations;
+		return out;
+	}
 };
 
 
@@ -56,17 +72,23 @@ namespace sjtu {
 class TTS {
 
 private:
-    /// forward declaration
-    struct LineData;
-    struct BuyReturnData;
-    struct StationData;
-    struct CityData;
-    struct TrainData;
+	/// forward declaration
+	struct LineData;
+	struct BuyReturnData;
+	struct StationData;
+	struct CityData;
+	struct TrainData;
 
 private:
+	const QDir log_path;
+	const QDir data_path;
+
+private:
+
     Server server;
     user_ptr  current_user;
     admin_ptr current_admin;
+    int id_cnt;
 
     /// query
     smart_ptr<vector<train_ptr>>
@@ -78,6 +100,9 @@ private:
     smart_ptr<vector<train_ptr>>
     query_train(const Station & from, const Station & to, Date date) const;
 
+
+    /// add (loading)
+    user_ptr _add_user(const QString &name, int ID);
 
     /// add (admin permission required)
     bool add_station(const StationData &);
@@ -95,27 +120,44 @@ private:
      */
     bool return_ticket(ticket_ptr ticket, int num);
 
-    // 返回用户当前的票的
+private: // 返回用户当前的票的
     const deque<ticket_ptr> & current_tickets();
+public:
+    vector<QString> current_tickets(int ID);
 
-    // 登陆账户，返回登录成功与否（只检查ID和密码是否匹配），
-    // 出问题会抛出异常
-    bool login_user(const int & ID, const QString password);
-    bool login_admin(const int & ID, const QString password);
+public:
+	// 登陆账户，返回登录成功与否（只检查ID和密码是否匹配），
+	// 出问题会抛出异常
+	bool login_user(const int & ID, const QString & password);
+	bool login_admin(const int & ID, const QString & password);
+	int register_user(const QString & name, const QString & password);
+	int register_admin(const QString & name, const QString & password);
 
 private:
-    /// parser
+	/// parser
 	LineData line_transform(QString str);
 	BuyReturnData operation_transform(QString str);
 public:
-    /// API
+	/// API
+	bool add_line(const QString & str);
 
-
-
-
+private: // 查找station-station的票
+    vector<Ticket> q_ss_ticket(const QString &f, const QString &t, int date);
 public:
-    /// init
-    TTS();
+    vector<QString> q_ss(const QString &f, const QString &t, int date);
+    vector<QString> query_city_city(const QString &f, const QString &t, int date);
+
+
+
+private:
+	bool is_train_type(QChar ch);
+public:
+	/// init
+	bool load_ascii();
+	bool load_binary();
+	void save_binary();
+	TTS();
+	~TTS();
 };
 }
 
@@ -134,47 +176,73 @@ public:
 
 struct TTS::BuyReturnData
 {
-    QString name;
-    int ID;
-    QString operation;
-    int num;
-    QString kind_of_seat;
-    QString train_ID;
-    QString from_station;
-    QString to_station;
-    QString date;
+	QString name;
+	int ID;
+	QString operation;
+	int num;
+	QString kind_of_seat;
+	QString train_ID;
+	QString from_station;
+	QString to_station;
+	int date;
 };
 
 struct TTS::StationData {
-    QString name;
-    QString location;
+	QString name;
+	QString location;
 
-    StationData(){}
-    StationData(QString _name, QString _loc)
-        : name(_name), location(_loc) {}
+	StationData(){}
+	StationData(QString _name, QString _loc)
+		: name(_name), location(_loc) {}
 };
 
 struct TTS::CityData {
-    QString name;
+	QString name;
 
-    CityData(){}
-    CityData(QString _name)
-            : name(_name) {}
+	CityData(){}
+	CityData(QString _name)
+			: name(_name) {}
 };
 
 struct TTS::TrainData {
-    QString line_name;
-    int date; // 2017.1.20 -> 20170120
-    bool selling = 0;
-    vector<vector<int>> station_available_tickets;
-    /* saves the number of remaining tickets for each station
-     * e.g. station 0--1--2--3--4 with capacity 200 seats, then
-     * station_available_ticket[] = {200, 200, 200, 200} //Only four interval
-     * if a customer bought a ticket from 1 to 3, then
-     * station_available_ticket[] = {200, 199, 199, 200}
+	QString line_name;
+	int date; // 2017.1.20 -> 20170120
+	bool selling = 0;
+	vector<vector<int>> station_available_tickets;
+	/* saves the number of remaining tickets for each station
+	 * e.g. station 0--1--2--3--4 with capacity 200 seats, then
+	 * station_available_ticket[] = {200, 200, 200, 200} //Only four interval
+	 * if a customer bought a ticket from 1 to 3, then
+	 * station_available_ticket[] = {200, 199, 199, 200}
 	 */
 };
 
 }
 
 #endif //TTS_SERVER_H
+
+/*当前订单函数(user)
+ *传参：无(当前id)
+ *返回值：一个字符串的vector
+ *
+ * 历史购票函数（user)
+ * 传参：无（当前id）
+ * 返回值：一个字符串的vector
+ *
+ * 查票函数_站到站（user, admin)
+ * 传参：出发站（qstr)，终点站(qstr)，出发时间(int)
+ * 返回：字符串vector
+ *
+ * 查票函数_城到城（user,admin)
+ * 传参：出发站(qstr)， 终点站(qstr)，出发时间(int)
+ *
+ * 添加线路函数(admin)
+ * 传参：出发站（qstr)，出发时间(int)，终点站(qstr)，到达时间(int），车次编号（qstr)
+ * 返回值：bool（是否添加成功）//可不需要返回值
+ *
+ * 删除线路函数（admin)
+ * 传参：车次编号（qstr)
+ * 返回值：bool（是否删除成功）//可不需要返回值
+ *
+ */
+
