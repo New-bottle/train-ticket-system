@@ -302,15 +302,15 @@ bool sjtu::TTS::load_ascii() {
     QTextStream fin2(&file2);
     while (fin2.readLineInto(&str)) {
         ++cnt;
-        if (cnt % 1000 == 0)
-            std::cout << cnt << std::endl;
+//        if (cnt % 1000 == 0)
+//            std::cout << cnt << std::endl;
         BuyReturnData ans = operation_transform(str);
         if (server.check_user(ans.ID)) {
             auto user = server.find_user(ans.ID);
             user->name = ans.name;
         } else {
            auto user = _add_user(ans.name, ans.ID);
-           std::cout << user->ID << std::endl;
+//           std::cout << user->ID << std::endl;
         }
         buy_tickets_data tmp;
         tmp.ID = ans.ID;
@@ -349,6 +349,12 @@ bool sjtu::TTS::load_binary() {
 	QString path = QDir::currentPath();
 	path += "/../train-ticket-system/data/";
     path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/";
+
+    QString id_cnt_file_name = "id_cnt.dat";
+    QFile id_cnt_file(path + id_cnt_file_name);
+    if(!id_cnt_file.open(QIODevice::ReadOnly)) return false;
+    QDataStream id_cnt_fin(&id_cnt_file);
+    id_cnt_fin >> id_cnt;
 
 	memory_pool<User>::end_counting();
 	QString User_file_name = "Users.dat";
@@ -438,6 +444,12 @@ void sjtu::TTS::save_binary() {
 	path += "/../train-ticket-system/data/";
 //	directory = path + "/../train-ticket-system/operation.dat";
     path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/";
+
+    QString id_cnt_file_name = "id_cnt.dat";
+    QFile id_cnt_file(path + id_cnt_file_name);
+    id_cnt_file.open(QIODevice::WriteOnly);
+    QDataStream id_cnt_fout(&id_cnt_file);
+    id_cnt_fout << id_cnt;
 
 	QString User_file_name = "Users.dat";
 	QFile User_file(path + User_file_name);
@@ -638,7 +650,7 @@ sjtu::TTS::BuyReturnData sjtu::TTS::operation_transform(QString str)
 
     ans.name = parts[0];
 
-    QTextStream cin1(&parts[1]);
+//  QTextStream cin1(&parts[1]);
 //	ans.ID = parts[1];
     ans.ID = parts[1].toInt();
 
@@ -778,6 +790,8 @@ sjtu::vector<sjtu::query_ticket_ans> sjtu::TTS::query_city_city(const sjtu::quer
         for (int i = 0; i < (int)train.line->seat_kind_names.size(); ++i) {
             tmp.seat_kind = train.line->seat_kind_names[i];
             tmp.ticket_left = train.min_avail(tmp.start_station, tmp.end_station, tmp.seat_kind);
+            if (tmp.ticket_left < 0)
+                continue;
             ans.push_back(tmp);
         }
     }
@@ -802,6 +816,8 @@ sjtu::vector<sjtu::query_ticket_ans> sjtu::TTS::query_station_station(const sjtu
         for (int i = 0; i < (int)train.line->seat_kind_names.size(); ++i) {
             tmp.seat_kind = train.line->seat_kind_names[i];
             tmp.ticket_left = train.min_avail(tmp.start_station, tmp.end_station, tmp.seat_kind);
+            if (tmp.ticket_left < 0)
+                continue;
             ans.push_back(tmp);
         }
     }
@@ -822,7 +838,7 @@ sjtu::vector<sjtu::query_my_order_ans> sjtu::TTS::query_my_order(const sjtu::que
         tmp.start_station = ticket.train->get_station_name(ticket.from);
         tmp.start_time = ticket.train->line->dep(ticket.from);
         tmp.end_station = ticket.train->get_station_name(ticket.to);
-        tmp.end_time   = ticket.train->line->dep(ticket.to);
+        tmp.end_time   = ticket.train->line->arr(ticket.to);
         tmp.seat_kind = ticket.train->line->seat_kind_names[ticket.kind];
         tmp.ticket_number = ticket.num;
         result.push_back(tmp);

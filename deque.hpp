@@ -956,6 +956,23 @@ public:
     void pop_front() {
         erase(begin());
     }
+
+    friend QDataStream& operator >> (QDataStream &in, deque &rhs) {
+        int tmp;
+        in >> tmp;
+        rhs.clear();
+        for (int i = 0; i < tmp; ++i) {
+            rhs.push_back(T());
+            in >> *(--rhs.end());
+        }
+        return in;
+    }
+    friend QDataStream& operator << (QDataStream &out, const deque &rhs) {
+        out << (int)rhs.size();
+        for (auto iter = rhs.cbegin(); iter != rhs.cend(); ++iter)
+            out << *iter;
+        return out;
+    }
 };
 
 }

@@ -53,11 +53,11 @@ public:
     // 会检查是否有相同的票，如果有则只增加其张数。
     void add_ticket(ticket_ptr ticket);
 	friend QDataStream& operator >> (QDataStream &in, User &rhs) {
-		in >> rhs.name >> rhs.ID >> rhs.password;
+        in >> rhs.name >> rhs.ID >> rhs.password >> rhs.tickets;
 		return in;
 	}
 	friend QDataStream& operator << (QDataStream &out, const User &rhs) {
-		out << rhs.name << rhs.ID << rhs.password;
+        out << rhs.name << rhs.ID << rhs.password << rhs.tickets;
 		return out;
 	}
 };
