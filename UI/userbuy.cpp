@@ -53,7 +53,7 @@ void userbuy::on_pushButton_6_clicked(){}
 void userbuy::on_search_by_station_clicked()
 {
     ui->tableWidget->clear();
-    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_station_station(sjtu::query_ticket_ss_data(ui->start_by_station->currentText(), ui->end_by_station->currentText(), ui->time_by_station->currentText()));
+    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_station_station(sjtu::query_ticket_ss_data(ui->start_by_station->currentText(), ui->end_by_station->currentText(), ui->time_by_station->currentText().toInt()));//need to be done
     for(int i = 0; i < vec.size(); ++i)
     {
         QTableWidgetItem * one = new QTableWidgetItem(vec[i].train_name);

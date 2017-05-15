@@ -2,6 +2,7 @@
 #define USERTICKET_H
 
 #include <QDialog>
+#include <QTableWidgetItem>
 
 namespace Ui {
 class userticket;
