@@ -53,7 +53,7 @@ void userbuy::on_pushButton_6_clicked(){}
 void userbuy::on_search_by_station_clicked()
 {
     ui->tableWidget->clear();
-    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_station_station(sjtu::query_ticket_ss_data(ui->start_by_station->currentText(), ui->end_by_station->currentText(), ui->time_by_station->currentText().toInt()));//need to be done
+    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_station_station(sjtu::query_ticket_ss_data(ui->start_station->text(), ui->end_station->text(), ui->dateEdit_station->text().toInt()));//need to be done
     for(int i = 0; i < vec.size(); ++i)
     {
         QTableWidgetItem * one = new QTableWidgetItem(vec[i].train_name);
@@ -78,7 +78,7 @@ void userbuy::on_search_by_station_clicked()
 void userbuy::on_search_by_city_clicked()
 {
     ui->tableWidget->clear();
-    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_city_city(sjtu::query_ticket_cc_data(ui->start_by_city->currentText(), ui->end_by_city->currentText(), ui->time_by_city->currentText().toInt()));//need to be done
+    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_city_city(sjtu::query_ticket_cc_data(ui->start_city->text(), ui->end_city->text(), ui->dateEdit_city->text().toInt()));//need to be done
     for(int i = 0; i < vec.size(); ++i)
     {
         QTableWidgetItem * one = new QTableWidgetItem(vec[i].train_name);
