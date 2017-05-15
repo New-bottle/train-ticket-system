@@ -256,7 +256,7 @@ bool sjtu::TTS::load_ascii() {
     QDir dir = QDir::current();
     QString directory = QDir::currentPath();
     directory += "/../train-ticket-system/trains.csv";
-//    directory = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/trains.csv";
+    directory = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/trains.csv";
     QFile file(directory);
     if (!file.open(QIODevice::ReadOnly|QIODevice::Text)) {
         std::cout << "No trains' ascii file!" << std::endl;
@@ -277,7 +277,7 @@ bool sjtu::TTS::load_ascii() {
 
     directory = QDir::currentPath();
     directory += "/../train-ticket-system/operation.out";
-//    directory = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/operation.out";
+    directory = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/operation.out";
     QFile file2(directory);
     if (!file2.open(QIODevice::ReadOnly|QIODevice::Text)) {
         std::cout << "No operation ascii file!" << std::endl;

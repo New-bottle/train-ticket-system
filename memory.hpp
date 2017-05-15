@@ -103,7 +103,7 @@ public:
 
     static void put_T(int pos);
 public:
-    static pool_ptr get_T(T a = T());
+    static pool_ptr get_T(const T & a = T());
     static int size();
 	static void start_counting() {
             is_counted = 1;
@@ -125,10 +125,10 @@ bool memory_pool<T>::is_counted = 0;
 
 // get & put
 template<class T>
-typename memory_pool<T>::pool_ptr memory_pool<T>::get_T(T a) {
+typename memory_pool<T>::pool_ptr memory_pool<T>::get_T(const T & a) {
     if (recycler.empty()) {
         container.push_back(a);
-		counter.push_back(1);
+        counter.push_back(0);
         return pool_ptr((int)container.size() -1);
     }
     int pos = recycler.back();
