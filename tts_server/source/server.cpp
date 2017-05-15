@@ -298,8 +298,12 @@ bool sjtu::TTS::load_ascii() {
         std::cout << "No operation ascii file!" << std::endl;
         return false;
     }
+    int cnt = 0;
     QTextStream fin2(&file2);
     while (fin2.readLineInto(&str)) {
+        ++cnt;
+        if (cnt % 1000 == 0)
+            std::cout << cnt << std::endl;
         BuyReturnData ans = operation_transform(str);
         if (server.check_user(ans.ID)) {
             auto user = server.find_user(ans.ID);
