@@ -170,6 +170,8 @@ public:
     register_user_ans register_user(const register_user_data & data);
     register_admin_ans register_admin(const register_admin_data & data);
     add_train_ans add_train(const add_train_data & data);
+    // todo
+    change_password_ans change_password(const change_password_data & data);
 };
 }
 

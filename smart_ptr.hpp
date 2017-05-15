@@ -26,7 +26,8 @@ void smart_ptr <T>::terminate () {
 	if (m_cnt != nullptr) {
 		--(*m_cnt);
 		if (*m_cnt == 0) {
-			if (m_ptr != nullptr) delete []m_ptr;
+            if (m_ptr != nullptr)
+                delete m_ptr;
 			delete m_cnt;
 		}
 	}
