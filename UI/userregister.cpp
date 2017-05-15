@@ -2,6 +2,7 @@
 #include "ui_userregister.h"
 #include "userlogin.h"
 #include "../tts_server/header/server.h"
+#include <QLabel>
 
 extern sjtu::TTS tts;
 
@@ -21,6 +22,7 @@ void userregister::on_confirm_clicked()
 {
     int id = tts.register_user(ui->userLineEdit->text(), ui->pwdLineEdit->text());
     QLabel *label = new QLabel("你的id号是" + QString::number(id));
+    label->show();
     userlogin u_log;
     u_log.exec();
 }
