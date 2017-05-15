@@ -463,11 +463,11 @@ void sjtu::TTS::save_binary() {
 
 //Constructor
 sjtu::TTS::TTS() {
-	if (load_binary()) return;
-	else load_ascii();
+    //if (load_binary()) return;
+    //else load_ascii();
 }
 sjtu::TTS::~TTS() {
-	save_binary();
+    //save_binary();
 }
 
 

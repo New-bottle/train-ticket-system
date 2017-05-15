@@ -1,6 +1,7 @@
 #include "search.h"
 #include "ui_search.h"
 #include "userlogin.h"
+#include "userregister.h"
 #include "../tts_server/header/query.h"
 #include "../tts_server/header/server.h"
 #include <QAbstractItemView>
@@ -29,8 +30,8 @@ search::~search()
 
 void search::on_pushButton_2_clicked()
 {
-    userlogin u_log;
-    u_log.exec();
+    userregister u_reg;
+    u_reg.exec();
 }
 
 void search::on_query_by_city_clicked()

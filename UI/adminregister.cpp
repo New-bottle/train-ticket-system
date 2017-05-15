@@ -22,8 +22,9 @@ Adminregister::~Adminregister()
 void Adminregister::on_confirm_clicked()
 {
     int id = tts.register_admin(ui->userLineEdit->text(), ui->pwdLineEdit->text());
-    QLabel * label = new QLabel("你的id号是");
+    QLabel * label = new QLabel("你的id号是" + QString::number(id));
     label->show();
     adminlogin a_log;
     a_log.exec();
+//    this->close();
 }
