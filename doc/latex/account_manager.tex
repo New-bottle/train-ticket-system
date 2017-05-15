@@ -3,12 +3,36 @@
     
 \subsection{Account}
     \subsubsection{成员变量}
-    QString name
-    int ID
-    QString password
+    \begin{itemize}
+        \item (QString) name
+        \item (int) ID
+        \item (QString) password
+    \end{itemize}
 
     \subsubsection{成员函数}
-    void update_password(const QString &new_password)
+    \begin{itemize}
+    \item void update_password(const QString &new_password)
     用new_password替换原来的password
     
-    void 
+    \item (bool) check_password(const QString &)
+    检查填入密码是否与密码相同
+    \end{itemize}
+
+\subsection{User}
+    派生自 Account
+    \subsubsection{成员变量}
+    \begin{itemize}
+        \item (QString) name
+        \item (int) ID
+        \item (QString) password
+        \item (deque<ticket_ptr>) tickets
+    \end{itemize}
+
+    \subsubsection{成员函数}
+    \begin{itemize}
+        \item void add_ticket(ticket_ptr ticket)
+    \end{itemize}
+
+\subsection{Admin}
+    派生自 Account
+    然而并没有什么特别的
