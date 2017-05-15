@@ -141,6 +141,12 @@ struct add_line_data
     }
 };
 
+struct add_train_data {
+    QString line_name;
+    int ldata, rdata;
+};
+typedef bool add_train_ans;
+
 /*函数接口名
  *
  * query_city_city

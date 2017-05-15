@@ -170,6 +170,7 @@ public:
     delete_line_ans delete_line(const delete_line_data & data);
     register_user_ans register_user(const register_user_data & data);
     register_admin_ans register_admin(const register_admin_data & data);
+    add_train_ans add_train(const add_train_data & data);
 };
 }
 
