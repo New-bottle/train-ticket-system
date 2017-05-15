@@ -107,7 +107,7 @@ sjtu::TTS::query_train(const sjtu::City &from, const sjtu::City &to, sjtu::Date 
     for (from_station = from.stations.cbegin(); from_station != from.stations.cend() ; ++from_station) {
         vector<line_ptr>::const_iterator cur_line;
         for (cur_line = (*from_station)->lines.cbegin(); cur_line != (*from_station)->lines.cend(); ++cur_line) {
-            if (!(*cur_line)->check_date(date)) {
+            if (!(*cur_line)->check_date(date) || !(*cur_line)->trains[data]->selling) {
                 continue;
             }
             vector<station_ptr>::const_iterator cur_station = (*cur_line)->stations.cbegin();
@@ -1106,7 +1106,44 @@ sjtu::add_train_ans sjtu::TTS::add_train(const sjtu::add_train_data & data) {
     return true;
 }
 
+sjtu::change_password_ans sjtu::TTS::change_password(const sjtu::change_password_data & data) {
+    // TODO log
 
+    auto user = server.find_user(data.ID);
+    user->password = data.new_password;
+    return true;
+}
+
+sjtu::start_selling_ans sjtu::TTS::start_selling(const sjtu::start_selling_data & data) {
+    auto line = server.find_line(data.line_name);
+    line->trains[Date(data.date)]->selling = 1;
+}
+
+sjtu::end_selling_ans sjtu::TTS::end_selling(const sjtu::end_selling_data & data) {
+    auto line = server.find_line(data.line_name);
+    line->trains[Date(data.date)]->selling = 0;
+}
+
+sjtu::check_user_ans sjtu::TTS::check_user(const sjtu::check_user_data & data) {
+    auto user = server.find_user(data.ID);
+    check_user_ans tmp;
+    tmp.name = user->name;
+    tmp.tickets = query_my_order(data.ID);
+    return tmp;
+}
+
+sjtu::check_line_ans sjtu::TTS::check_line(const sjtu::check_line_data &data) {
+    auto line = server.find_line(data.line_name);
+    check_line_ans tmp;
+    tmp.line_name = line->name;
+    tmp.seat_kind_names = line->seat_kind_names;
+    for (int i = 0; i < line->stations.size(); ++i)
+        tmp.station_names.push_back(line->stations[i]->name);
+    tmp.arr_time = line->arr_time;
+    tmp.dep_time = line->dep_time;
+    tmp.price = line->price;
+    return tmp;
+}
 
 
 
