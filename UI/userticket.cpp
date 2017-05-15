@@ -11,6 +11,7 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QModelIndex>
+#include "userreturn.h"
 
 extern sjtu::TTS tts;
 extern int ID;
@@ -82,3 +83,9 @@ void userticket::on_pushButton_6_clicked()
 }
 
 void userticket::on_tableWidget_2_itemClicked(QTableWidgetItem *item){}
+
+void userticket::on_return_ticket_button_clicked()
+{
+    userreturn u_ret;
+    u_ret.exec();
+}

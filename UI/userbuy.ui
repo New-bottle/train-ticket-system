@@ -37,23 +37,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="start_by_station">
-       <item>
-        <property name="text">
-         <string>北京</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>上海</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>西藏</string>
-        </property>
-       </item>
-      </widget>
+      <widget class="QLineEdit" name="start_station"/>
      </item>
      <item>
       <widget class="QLabel" name="end_station_label">
@@ -63,13 +47,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="end_by_station">
-       <item>
-        <property name="text">
-         <string>北京</string>
-        </property>
-       </item>
-      </widget>
+      <widget class="QLineEdit" name="end_station"/>
      </item>
      <item>
       <widget class="QLabel" name="label_3">
@@ -79,7 +57,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="time_by_station"/>
+      <widget class="QDateEdit" name="dateEdit_station"/>
      </item>
      <item>
       <widget class="QPushButton" name="search_by_station">
@@ -100,23 +78,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="start_by_city">
-       <item>
-        <property name="text">
-         <string>北京</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>上海</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>西藏</string>
-        </property>
-       </item>
-      </widget>
+      <widget class="QLineEdit" name="start_city"/>
      </item>
      <item>
       <widget class="QLabel" name="end_city_label">
@@ -126,13 +88,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="end_by_city">
-       <item>
-        <property name="text">
-         <string>北京</string>
-        </property>
-       </item>
-      </widget>
+      <widget class="QLineEdit" name="end_city"/>
      </item>
      <item>
       <widget class="QLabel" name="label_7">
@@ -142,7 +98,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="time_by_city"/>
+      <widget class="QDateEdit" name="dateEdit_city"/>
      </item>
      <item>
       <widget class="QPushButton" name="search_by_city">
