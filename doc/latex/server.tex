@@ -1,7 +1,33 @@
 \section{Server}
 
 \subsection{综述}
-    server里面存储各种信息
+    server里面存储各种信息，同时实现了一些接口
 
     TTS(short for Train-Ticket-System)
-    里面存储
+    包装了server与前端交互的所有接口
+
+\subsection{server}
+    \subsubsection{成员结构体}
+    \begin{itemize}
+    \item {LineData}
+
+    \item {ButReturnData}
+
+    \item {StationData}
+
+    \item {CityData}
+
+    \item {TrainData}
+    
+    \end{itemize}
+
+    \subsubsection{接口}
+    \begin{itemize}
+    \item {query_train(A, B, Date)}
+    A和B均可为 City 或 Station
+    返回一个存储着所有合法的train的指针的vector，
+    为了提高效率，只返回指向该vector的smart_ptr
+    
+    \item {add_station(const StationData &)}
+    
+    \subsubsection{}
