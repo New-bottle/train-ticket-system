@@ -36,10 +36,26 @@ void search::on_pushButton_2_clicked()
 
 void search::on_query_by_city_clicked()
 {
-    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_city_city(sjtu::query_ticket_cc_data(ui->start_city->text(), ui->end_city->text(), ui->dateEdit_city->text().toInt()));//need to be done
+    ui->tableWidget_2->clear();
+    QTableWidgetItem * oone = new QTableWidgetItem("车次号");
+    QTableWidgetItem * ttwo = new QTableWidgetItem("出发日期");
+    QTableWidgetItem * tthr = new QTableWidgetItem("始发站");
+    QTableWidgetItem * ffou = new QTableWidgetItem("出发时间");
+    QTableWidgetItem * ffiv = new QTableWidgetItem("终点站");
+    QTableWidgetItem * ssix = new QTableWidgetItem("到达时间");
+    QTableWidgetItem * ssev = new QTableWidgetItem("座位种类");
+    QTableWidgetItem * eeig = new QTableWidgetItem("车次号");
+    ui->tableWidget_2->setHorizontalHeaderItem(2, oone);
+    ui->tableWidget_2->setHorizontalHeaderItem(3, ttwo);
+    ui->tableWidget_2->setHorizontalHeaderItem(4, tthr);
+    ui->tableWidget_2->setHorizontalHeaderItem(5, ffou);
+    ui->tableWidget_2->setHorizontalHeaderItem(6, ffiv);
+    ui->tableWidget_2->setHorizontalHeaderItem(7, ssix);
+    ui->tableWidget_2->setHorizontalHeaderItem(8, ssev);
+    ui->tableWidget_2->setHorizontalHeaderItem(9, eeig);
+    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_city_city(sjtu::query_ticket_cc_data(ui->start_city->text(), ui->end_city->text(), sjtu::transfer_date(ui->dateEdit_city->text())));
     for(int i = 0; i < vec.size(); ++i)
     {
-        ui->tableWidget_2->clear();
         QTableWidgetItem * one = new QTableWidgetItem(vec[i].train_name);
         QTableWidgetItem * two = new QTableWidgetItem(vec[i].start_date);
         QTableWidgetItem * three = new QTableWidgetItem(vec[i].start_station);
@@ -62,7 +78,23 @@ void search::on_query_by_city_clicked()
 void search::on_query_by_station_clicked()
 {
     ui->tableWidget_2->clear();
-    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_station_station(sjtu::query_ticket_ss_data(ui->start_station->text(), ui->end_station->text(), ui->dateEdit_station->text().toInt()));//need to be done
+    QTableWidgetItem * oone = new QTableWidgetItem("车次号");
+    QTableWidgetItem * ttwo = new QTableWidgetItem("出发日期");
+    QTableWidgetItem * tthr = new QTableWidgetItem("始发站");
+    QTableWidgetItem * ffou = new QTableWidgetItem("出发时间");
+    QTableWidgetItem * ffiv = new QTableWidgetItem("终点站");
+    QTableWidgetItem * ssix = new QTableWidgetItem("到达时间");
+    QTableWidgetItem * ssev = new QTableWidgetItem("座位种类");
+    QTableWidgetItem * eeig = new QTableWidgetItem("车次号");
+    ui->tableWidget_2->setHorizontalHeaderItem(2, oone);
+    ui->tableWidget_2->setHorizontalHeaderItem(3, ttwo);
+    ui->tableWidget_2->setHorizontalHeaderItem(4, tthr);
+    ui->tableWidget_2->setHorizontalHeaderItem(5, ffou);
+    ui->tableWidget_2->setHorizontalHeaderItem(6, ffiv);
+    ui->tableWidget_2->setHorizontalHeaderItem(7, ssix);
+    ui->tableWidget_2->setHorizontalHeaderItem(8, ssev);
+    ui->tableWidget_2->setHorizontalHeaderItem(9, eeig);
+    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_station_station(sjtu::query_ticket_ss_data(ui->start_station->text(), ui->end_station->text(), sjtu::transfer_date(ui->dateEdit_station->text())));
     for(int i = 0; i < vec.size(); ++i)
     {
         QTableWidgetItem * one = new QTableWidgetItem(vec[i].train_name);

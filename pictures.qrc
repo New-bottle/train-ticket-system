@@ -1,9 +1,1 @@
-<RCC>
-    <qresource prefix="/pictures"/>
-    <qresource prefix="/mypic"/>
-    <qresource prefix="/try">
-        <file>E:/tby/Pictures/icon.png</file>
-        <file>E:/tby/Pictures/3347542_143901038305_2_副_副本_副本.jpg</file>
-    </qresource>
-    <qresource prefix="/new/prefix1"/>
-</RCC>
+<RCC/>

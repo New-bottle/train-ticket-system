@@ -91,7 +91,7 @@ void userreturn::on_pushButton_5_clicked()
     sjtu::return_tickets_data data;
     data.ID = ID;
     data.train_name = ui->tableWidget->itemAt(Ind_userreturn.row(), 2)->text();
-    data.start_date = ui->tableWidget->itemAt(Ind_userreturn.row(), 3)->text().toInt();//need to be done
+    data.start_date = sjtu::transfer_date(ui->tableWidget->itemAt(Ind_userreturn.row(), 3)->text());//need to be done
     data.start_station = ui->tableWidget->itemAt(Ind_userreturn.row(), 4)->text();
     data.end_station = ui->tableWidget->itemAt(Ind_userreturn.row(), 6)->text();
     data.seat_kind = ui->tableWidget->itemAt(Ind_userreturn.row(), 8)->text();
@@ -106,4 +106,9 @@ void userreturn::on_pushButton_5_clicked()
         QMessageBox::warning(this, tr("退票失败"),tr("您可尝试重新退票"),QMessageBox::Yes);
     }
 
+}
+
+void userreturn::on_pushButton_6_clicked()
+{
+    this->hide();
 }

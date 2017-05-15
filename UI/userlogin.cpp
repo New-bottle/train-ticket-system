@@ -43,3 +43,8 @@ void userlogin::on_loginBtn_clicked()
         ui->userLineEdit->setFocus();
     }
 }
+
+void userlogin::on_exitBtn_clicked()
+{
+    this->hide();
+}

@@ -28,3 +28,8 @@ void Adminregister::on_confirm_clicked()
     a_log.exec();
 //    this->close();
 }
+
+void Adminregister::on_cancel_clicked()
+{
+    this->hide();
+}

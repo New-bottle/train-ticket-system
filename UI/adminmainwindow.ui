@@ -46,13 +46,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="text">
-          <string>登出</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="pushButton_4">
          <property name="text">
           <string>一键解体</string>
