@@ -36,3 +36,8 @@ void adminadd::on_pushButton_2_clicked()
         QMessageBox::warning(this, tr("添加失败"),tr("您可尝试重新添加"),QMessageBox::Yes);
     }
 }
+
+void adminadd::on_pushButton_3_clicked()
+{
+    this->hide();
+}

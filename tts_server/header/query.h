@@ -147,6 +147,10 @@ struct add_train_data {
 };
 typedef bool add_train_ans;
 
+
+int transfer_date(const QString & str);
+
+
 /*函数接口名
  *
  * query_city_city

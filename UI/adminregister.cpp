@@ -4,6 +4,7 @@
 #include <QLabel>
 #include "adminlogin.h"
 #include "../tts_server/header/query.h"
+#include <QMessageBox>
 
 extern sjtu::TTS tts;
 
@@ -21,10 +22,19 @@ Adminregister::~Adminregister()
 
 void Adminregister::on_confirm_clicked()
 {
+    if(ui->register_num->text() != "FBI_WARNING")
+    {
+        QMessageBox::warning(this, tr("邀请码错误！"),tr("邀请码错误，你不是合格司机"),QMessageBox::Yes);
+    }
     int id = tts.register_admin(ui->userLineEdit->text(), ui->pwdLineEdit->text());
     QLabel * label = new QLabel("你的id号是" + QString::number(id));
     label->show();
     adminlogin a_log;
     a_log.exec();
 //    this->close();
+}
+
+void Adminregister::on_cancel_clicked()
+{
+    this->hide();
 }

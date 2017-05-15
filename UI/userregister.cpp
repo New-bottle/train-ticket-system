@@ -30,3 +30,8 @@ void userregister::on_confirm_clicked()
     u_log.exec();
     this->hide();
 }
+
+void userregister::on_cancel_clicked()
+{
+    this->hide();
+}

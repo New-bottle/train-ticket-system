@@ -44,7 +44,8 @@ SOURCES +=\
     UI/userticket.cpp \
     UI/search.cpp \
     UI/chooseseat.cpp \
-    UI/adminsearch.cpp
+    UI/adminsearch.cpp \
+    tts_server/source/query.cpp
 
 HEADERS  += \
     vector.hpp \

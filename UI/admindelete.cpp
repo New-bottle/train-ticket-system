@@ -35,3 +35,8 @@ void admindelete::on_pushButton_6_clicked()
         QMessageBox::warning(this, tr("删除失败"), tr("你可尝试重新删除"), QMessageBox::Yes);
     }
 }
+
+void admindelete::on_pushButton_clicked()
+{
+    this->hide();
+}
