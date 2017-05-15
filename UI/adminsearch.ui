@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>search</class>
- <widget class="QDialog" name="search">
+ <class>adminsearch</class>
+ <widget class="QDialog" name="adminsearch">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,72 +23,9 @@
       </font>
      </property>
      <property name="text">
-      <string>游客查询</string>
+      <string>管理员查询</string>
      </property>
     </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>起始站</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="start_city">
-       <item>
-        <property name="text">
-         <string>北京</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>上海</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>西藏</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>终点站</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="end_city">
-       <item>
-        <property name="text">
-         <string>北京</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>出发时间</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="time_city"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="query_by_city">
-       <property name="text">
-        <string>按城市查询</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -145,9 +82,72 @@
       <widget class="QComboBox" name="time_station"/>
      </item>
      <item>
-      <widget class="QPushButton" name="query_by_station">
+      <widget class="QPushButton" name="search_by_station">
        <property name="text">
         <string>按站查询</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>起始站</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="start_city">
+       <item>
+        <property name="text">
+         <string>北京</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>上海</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>西藏</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>终点站</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="end_city">
+       <item>
+        <property name="text">
+         <string>北京</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>出发时间</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="time_city"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="search_by_city">
+       <property name="text">
+        <string>按城市查询</string>
        </property>
       </widget>
      </item>
@@ -158,52 +158,16 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="back_index">
          <property name="text">
-          <string>用户注册</string>
+          <string>回到主页</string>
          </property>
         </widget>
        </item>
       </layout>
      </item>
      <item>
-      <widget class="QTableWidget" name="tableWidget_2">
-       <row>
-        <property name="text">
-         <string>新建行</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>新建行</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>新建行</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>新建行</string>
-        </property>
-       </row>
-       <column>
-        <property name="text">
-         <string>新建列</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>新建列</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>新建列</string>
-        </property>
-       </column>
-      </widget>
+      <widget class="QTableWidget" name="tableWidget"/>
      </item>
      <item>
       <widget class="QScrollBar" name="verticalScrollBar">

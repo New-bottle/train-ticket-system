@@ -43,7 +43,8 @@ SOURCES +=\
     UI/userreturn.cpp \
     UI/userticket.cpp \
     UI/search.cpp \
-    UI/chooseseat.cpp
+    UI/chooseseat.cpp \
+    UI/adminsearch.cpp
 
 HEADERS  += \
     vector.hpp \
@@ -74,7 +75,8 @@ HEADERS  += \
     UI/userticket.h \
     UI/search.h \
     UI/chooseseat.h \
-    tts_server/header/query.h
+    tts_server/header/query.h \
+    UI/adminsearch.h
 
 FORMS    += \
     UI/adminadd.ui \
@@ -92,7 +94,8 @@ FORMS    += \
     UI/userticket.ui \
     UI/search.ui \
     UI/chooseseat.ui \
-    UI/beginwindow.ui
+    UI/beginwindow.ui \
+    UI/adminsearch.ui
 
 DISTFILES += \
     log.txt
