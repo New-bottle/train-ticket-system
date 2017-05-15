@@ -29,6 +29,13 @@ void userlogin::on_pushButton_3_clicked()
 
 void userlogin::on_loginBtn_clicked()
 {
+    if(ui->userLineEdit->text().isEmpty() || ui->pwdLineEdit->text().isEmpty())
+    {
+        QMessageBox::warning(this, tr("Warning"), tr("user name or password is empty!"), QMessageBox::Yes);
+        ui->userLineEdit->clear();
+        ui->pwdLineEdit->clear();
+        ui->userLineEdit->setFocus();
+    }
     if(tts.login_user(sjtu::login_user_data(ui->userLineEdit->text().toInt(), ui->pwdLineEdit->text())))
     {
         ID = ui->userLineEdit->text().toInt();

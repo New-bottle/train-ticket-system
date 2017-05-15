@@ -7,6 +7,7 @@
 #include <QAbstractItemView>
 #include <QTableWidget>
 #include <QTableWidgetItem>
+#include <QProgressBar>
 
 extern sjtu::TTS tts;
 
@@ -18,6 +19,9 @@ search::search(QWidget *parent) :
     ui->tableWidget_2->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableWidget_2->setSortingEnabled(true);
+    ui->progressBar->setMaximum(100);
+    ui->progressBar->setMinimum(0);
+    ui->progressBar->setValue(0);
 //    ui->tableWidget_2->setModel(model);
 }
 
@@ -37,6 +41,8 @@ void search::on_pushButton_2_clicked()
 void search::on_query_by_city_clicked()
 {
     ui->tableWidget_2->clear();
+    int nownum = 0;
+    ui->progressBar->setValue(nownum);
     QTableWidgetItem * oone = new QTableWidgetItem("车次号");
     QTableWidgetItem * ttwo = new QTableWidgetItem("出发日期");
     QTableWidgetItem * tthr = new QTableWidgetItem("始发站");
@@ -72,12 +78,16 @@ void search::on_query_by_city_clicked()
         ui->tableWidget_2->setItem(i + 1, 7, six);
         ui->tableWidget_2->setItem(i + 1, 8, seven);
         ui->tableWidget_2->setItem(i + 1, 9, eight);
+        nownum += 100 / vec.size();
+        ui->progressBar->setValue(nownum);
     }
 }
 
 void search::on_query_by_station_clicked()
 {
     ui->tableWidget_2->clear();
+    int nownum = 0;
+    ui->progressBar->setValue(nownum);
     QTableWidgetItem * oone = new QTableWidgetItem("车次号");
     QTableWidgetItem * ttwo = new QTableWidgetItem("出发日期");
     QTableWidgetItem * tthr = new QTableWidgetItem("始发站");
@@ -113,5 +123,7 @@ void search::on_query_by_station_clicked()
         ui->tableWidget_2->setItem(i + 1, 7, six);
         ui->tableWidget_2->setItem(i + 1, 8, seven);
         ui->tableWidget_2->setItem(i + 1, 9, eight);
+        nownum += 100 / vec.size();
+        ui->progressBar->setValue(nownum);
     }
 }
