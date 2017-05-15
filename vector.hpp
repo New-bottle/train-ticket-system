@@ -26,11 +26,13 @@ private:
         storage = (T*)operator new[](MaxSize * sizeof(T));
         for(int i = 0; i < NowLength; ++i)
         {
-            new(storage + i) T(tem[i]);
+//			storage[i] = new T(tem[i]);
+			new(storage + i) T(tem[i]);
             tem[i].~T();
         }
-        operator delete [](tem);
+		operator delete [](tem);
     }
+
 public:
 	/**
 	 * TODO
@@ -466,11 +468,10 @@ public:
 	friend QDataStream& operator >> (QDataStream &in, vector &rhs) {
 		int tmp;
 		in >> tmp;
-		T x;
 		rhs.clear();
 		for (int i = 0; i < tmp; ++i) {
-			in >> x;
-			rhs.push_back(x);
+            rhs.push_back(T());
+            in >> rhs.storage[rhs.NowLength - 1];
 		}
 		return in;
 	}
