@@ -15,6 +15,11 @@ public:
     explicit searchbyline(QWidget *parent = 0);
     ~searchbyline();
 
+private slots:
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_clicked();
+
 private:
     Ui::searchbyline *ui;
 };

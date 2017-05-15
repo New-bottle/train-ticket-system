@@ -159,6 +159,8 @@ typedef bool change_password_ans;
 struct start_selling_data {
     QString line_name;
     int date;
+    start_selling_data(QString a, int b):
+        line_name(a), data(b){}
 };
 typedef bool start_selling_ans;
 

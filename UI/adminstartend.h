@@ -18,6 +18,8 @@ public:
 private slots:
     void on_confirm_start_clicked();
 
+    void on_confirm_end_clicked();
+
 private:
     Ui::adminstartend *ui;
 };
