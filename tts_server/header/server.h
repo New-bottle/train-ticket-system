@@ -172,6 +172,11 @@ public:
     add_train_ans add_train(const add_train_data & data);
     // todo
     change_password_ans change_password(const change_password_data & data);
+    start_selling_ans start_selling(const start_selling_data & data);
+    end_selling_ans end_selling(const end_selling_data & data);
+    check_user_ans check_user(const check_user_data & data);
+    check_line_ans check_line(const check_line_data &data);
+
 };
 }
 
