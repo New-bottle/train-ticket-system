@@ -13,10 +13,10 @@ adminsearch::adminsearch(QWidget *parent) :
     ui(new Ui::adminsearch)
 {
     ui->setupUi(this);
-    ui->tableWidget_2->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->tableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableWidget_2->setSortingEnabled(true);
-    ui->tableWidget_2->setModel(model);
+    ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidget->setSortingEnabled(true);
+//    ui->tableWidget->setModel(model);
 }
 
 adminsearch::~adminsearch()
@@ -27,7 +27,7 @@ adminsearch::~adminsearch()
 void adminsearch::on_search_by_station_clicked()
 {
     ui->tableWidget->clear();
-    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_station_station(sjtu::query_ticket_ss_data(ui->start_station->currentText(), ui->end_station->currentText(), ui->time_station->currentText()));
+    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_station_station(sjtu::query_ticket_ss_data(ui->start_station->currentText(), ui->end_station->currentText(), ui->time_station->currentText().toInt()));//need to be done
     for(int i = 0; i < vec.size(); ++i)
     {
         QTableWidgetItem * one = new QTableWidgetItem(vec[i].train_name);
@@ -37,7 +37,7 @@ void adminsearch::on_search_by_station_clicked()
         QTableWidgetItem * five = new QTableWidgetItem(vec[i].end_station);
         QTableWidgetItem * six = new QTableWidgetItem(vec[i].end_time);
         QTableWidgetItem * seven = new QTableWidgetItem(vec[i].seat_kind);
-        QTableWidgetItem * one = new QTableWidgetItem(vec[i].ticket_left);
+        QTableWidgetItem * eight = new QTableWidgetItem(vec[i].ticket_left);
         ui->tableWidget->setItem(i + 1, 2, one);
         ui->tableWidget->setItem(i + 1, 3, two);
         ui->tableWidget->setItem(i + 1, 4, three);
@@ -52,7 +52,7 @@ void adminsearch::on_search_by_station_clicked()
 void adminsearch::on_search_by_city_clicked()
 {
     ui->tableWidget->clear();
-    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_city_city(sjtu::query_ticket_cc_data(ui->start_city->currentText(), ui->end_city->currentText(), ui->time_city->currentText()));
+    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_city_city(sjtu::query_ticket_cc_data(ui->start_city->currentText(), ui->end_city->currentText(), ui->time_city->currentText().toInt()));//need to be done
     for(int i = 0; i < vec.size(); ++i)
     {
         QTableWidgetItem * one = new QTableWidgetItem(vec[i].train_name);
@@ -62,14 +62,14 @@ void adminsearch::on_search_by_city_clicked()
         QTableWidgetItem * five = new QTableWidgetItem(vec[i].end_station);
         QTableWidgetItem * six = new QTableWidgetItem(vec[i].end_time);
         QTableWidgetItem * seven = new QTableWidgetItem(vec[i].seat_kind);
-        QTableWidgetItem * one = new QTableWidgetItem(vec[i].ticket_left);
-        ui->tableWidget_2->setItem(i + 1, 2, one);
-        ui->tableWidget_2->setItem(i + 1, 3, two);
-        ui->tableWidget_2->setItem(i + 1, 4, three);
-        ui->tableWidget_2->setItem(i + 1, 5, four);
-        ui->tableWidget_2->setItem(i + 1, 6, five);
-        ui->tableWidget_2->setItem(i + 1, 7, six);
-        ui->tableWidget_2->setItem(i + 1, 8, seven);
-        ui->tableWidget_2->setItem(i + 1, 9, eight);
+        QTableWidgetItem * eight = new QTableWidgetItem(vec[i].ticket_left);
+        ui->tableWidget->setItem(i + 1, 2, one);
+        ui->tableWidget->setItem(i + 1, 3, two);
+        ui->tableWidget->setItem(i + 1, 4, three);
+        ui->tableWidget->setItem(i + 1, 5, four);
+        ui->tableWidget->setItem(i + 1, 6, five);
+        ui->tableWidget->setItem(i + 1, 7, six);
+        ui->tableWidget->setItem(i + 1, 8, seven);
+        ui->tableWidget->setItem(i + 1, 9, eight);
     }
 }

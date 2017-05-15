@@ -23,7 +23,7 @@ userticket::userticket(QWidget *parent) :
     ui->tableWidget_2->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableWidget_2->setSortingEnabled(true);
-    ui->tableWidget_2->setModel(model);
+//    ui->tableWidget_2->setModel(model);
 }
 
 userticket::~userticket()

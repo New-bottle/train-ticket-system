@@ -1,6 +1,6 @@
 #include "userreturn.h"
 #include "ui_userreturn.h"
-#include "usermainwindow.h"
+#include "usermainwIndow.h"
 #include "userbuy.h"
 #include "userticket.h"
 #include "userhistory.h"
@@ -9,20 +9,21 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QModelIndex>
-
+#include <QMessageBox>
 
 extern sjtu::TTS tts;
 extern int ID;
+QModelIndex Ind_userreturn;
 
 userreturn::userreturn(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::userreturn)
 {
     ui->setupUi(this);
-    ui->tableWidget_2->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->tableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableWidget_2->setSortingEnabled(true);
-    ui->tableWidget_2->setModel(model);
+    ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidget->setSortingEnabled(true);
+//    ui->tableWidget->setModel(model);
 }
 
 userreturn::~userreturn()
@@ -54,9 +55,9 @@ void userreturn::on_pushButton_3_clicked()
     u_his.exec();
 }
 
-void userreturn::on_tableWidget_clicked(const QModelIndex &index)
+void userreturn::on_tableWidget_clicked(const QModelIndex &Index)
 {
-    Ind = index;
+    Ind_userreturn = Index;
 }
 
 void userreturn::on_show_order_clicked()
@@ -65,7 +66,6 @@ void userreturn::on_show_order_clicked()
     for(int i = 0; i < vec.size(); ++i)
     {
         ui->tableWidget->clear();
-        ui->tableWidget_2->clear();
         QTableWidgetItem * one = new QTableWidgetItem(vec[i].train_name);
         QTableWidgetItem * two = new QTableWidgetItem(vec[i].start_date);
         QTableWidgetItem * three = new QTableWidgetItem(vec[i].start_station);
@@ -90,12 +90,12 @@ void userreturn::on_pushButton_5_clicked()
 {
     sjtu::return_tickets_data data;
     data.ID = ID;
-    data.train_name = ui->tableWidget->itemAt(Ind.row(), 2);
-    data.start_date = ui->tableWidget->itemAt(Ind.row(), 3);
-    data.start_station = ui->tableWidget->itemAt(Ind.row(), 4);
-    data.end_station = ui->tableWidget->itemAt(Int.row(), 6);
-    data.seat_kind = ui->tableWidget->itemAt(Ind.row(), 8);
-    data.ticket_number = ui->ticket_number;
+    data.train_name = ui->tableWidget->itemAt(Ind_userreturn.row(), 2)->text();
+    data.start_date = ui->tableWidget->itemAt(Ind_userreturn.row(), 3)->text().toInt();//need to be done
+    data.start_station = ui->tableWidget->itemAt(Ind_userreturn.row(), 4)->text();
+    data.end_station = ui->tableWidget->itemAt(Ind_userreturn.row(), 6)->text();
+    data.seat_kind = ui->tableWidget->itemAt(Ind_userreturn.row(), 8)->text();
+    data.ticket_number = ui->ticket_number->value();
     bool success = tts.return_tickets(data);
     if(success)
     {

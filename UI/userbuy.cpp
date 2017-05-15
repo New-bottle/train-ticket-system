@@ -15,7 +15,7 @@
 
 extern sjtu::TTS tts;
 extern int ID;
-QModelIndex Ind;
+QModelIndex Ind_userbuy;
 
 userbuy::userbuy(QWidget *parent) :
     QDialog(parent),
@@ -104,17 +104,17 @@ void userbuy::on_listWidget_itemDoubleClicked(QListWidgetItem *item){}
 
 void userbuy::on_tableWidget_clicked(const QModelIndex &index)
 {
-    Ind = index;
+    Ind_userbuy = index;
 }
 void userbuy::on_pushButton_3_clicked()
 {
     sjtu::buy_tickets_data data;
     data.ID = ID;
-    data.train_name = ui->tableWidget->itemAt(Ind.row(), 2)->text();
-    data.start_date = ui->tableWidget->itemAt(Ind.row(), 3)->text().toInt();//need to be done
-    data.start_station = ui->tableWidget->itemAt(Ind.row(), 4)->text();
-    data.end_station = ui->tableWidget->itemAt(Ind.row(), 6)->text();
-    data.seat_kind = ui->tableWidget->itemAt(Ind.row(), 8)->text();
+    data.train_name = ui->tableWidget->itemAt(Ind_userbuy.row(), 2)->text();
+    data.start_date = ui->tableWidget->itemAt(Ind_userbuy.row(), 3)->text().toInt();//need to be done
+    data.start_station = ui->tableWidget->itemAt(Ind_userbuy.row(), 4)->text();
+    data.end_station = ui->tableWidget->itemAt(Ind_userbuy.row(), 6)->text();
+    data.seat_kind = ui->tableWidget->itemAt(Ind_userbuy.row(), 8)->text();
     data.ticket_num = ui->ticket_number->value();
     bool success = tts.buy_tickets(data);
     if(success)
