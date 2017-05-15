@@ -151,6 +151,8 @@ typedef bool add_train_ans;
 struct change_password_data {
     int ID;
     QString new_password;
+    change_password_data(int a, QString b):
+        ID(a), new_password(b){}
 };
 typedef bool change_password_ans;
 

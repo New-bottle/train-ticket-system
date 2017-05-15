@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>adminstartend</class>
- <widget class="QDialog" name="adminstartend">
+ <class>searchbyline</class>
+ <widget class="QDialog" name="searchbyline">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="label">
      <property name="font">
       <font>
        <family>微软雅黑 Light</family>
@@ -23,26 +23,26 @@
       </font>
      </property>
      <property name="text">
-      <string>开始/结束售票</string>
+      <string>查询车次</string>
      </property>
     </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>开始售票</string>
+        <string>车次</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="start_train"/>
+      <widget class="QLineEdit" name="lineEdit"/>
      </item>
      <item>
-      <widget class="QPushButton" name="confirm_start">
+      <widget class="QPushButton" name="pushButton_2">
        <property name="text">
-        <string>确定</string>
+        <string>查询</string>
        </property>
       </widget>
      </item>
@@ -51,30 +51,16 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QPushButton" name="pushButton">
        <property name="text">
-        <string>结束售票</string>
+        <string>回到主页</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="end_train"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="confirm_end">
-       <property name="text">
-        <string>确定</string>
-       </property>
-      </widget>
+      <widget class="QTableWidget" name="tableWidget"/>
      </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QCommandLinkButton" name="commandLinkButton">
-     <property name="text">
-      <string>回到主页</string>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>

@@ -1,5 +1,6 @@
 #include "adminstartend.h"
 #include "ui_adminstartend.h"
+#include "adminmainwindow.h"
 
 adminstartend::adminstartend(QWidget *parent) :
     QDialog(parent),
@@ -15,5 +16,11 @@ adminstartend::~adminstartend()
 
 void adminstartend::on_confirm_start_clicked()
 {
+    
+}
 
+void adminstartend::on_commandLinkButton_clicked()
+{
+    adminmainwindow a_main;
+    a_main.exec();
 }
