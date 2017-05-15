@@ -1,0 +1,82 @@
+%文档类型
+\documentclass[a4paper]{aritcle}
+
+%引用包裹
+\usepackage{bm}
+\usepackage{cmap}
+\usepackage{ctex}
+\usepackage{cite}
+\usepackage{color}
+\usepackage{float}
+\usepackage{xeCJK}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{indentfirst}
+\usepackage[cache=false]{minted}
+
+%代码高亮
+\geometry{margin=1in}
+
+memory.hpp
+
+\section{综述}
+    一个便于从文件读写的“内存”管理方式 
+    仿照stl中的smart_ptr，实现引用计数
+    memory_pool是内存池，基于vector，pool_ptr是指向相应对象的指针
+
+    所有成员都是静态成员
+    用vector来实现一个内存池，int类型的数组下标充当指针。
+
+
+\subsection{memory_pool}
+
+\subsubsection{成员}
+    
+    container, recycler, counter, is_counted
+    
+    pool_ptr里面存储的是下标，
+
+    vector<T> container
+    存储实际内容
+
+    vector<int> recycler
+    存储已经没有指向它的指针的地址(下标)，内存回收。
+
+    vector<int> counter
+    引用计数器，counter[i]的值(num)表示有(num)个pool_ptr指向container[i]这个对象
+
+
+\subsubsection{成员函数}
+    void save(QDataStream &out) 
+    将该memory_pool中的内容输出到数据流out中，用于文件读写
+
+    void load(QDataStream &in)
+    从数据流中读入该memory_pool的内容，用于文件读写
+
+\subsection{pool_ptr}
+
+\subsubsection{成员变量}
+    int pos
+    指向的是container中的第pos个元素
+
+\subsubsection{成员函数}
+    void terminate()
+    析构该指针，同时检查引用计数，如果已经是最后一个则销毁该对象(放入recycle)
+
+    pool_ptr get_T() 
+    构造一个指向T类型的指针，如果recycle中有元素则优先使用recycle中的
+    void put_T()
+    将一个指向T类型的指针放入recycle中
+
+    文件读写pool_ptr的时候只读写pos(相当于一个int)
+
+    T& operator *()
+    返回相应对象的引用
+
+    T* opeartor ->()
+    返回该对象所在的内存地址
