@@ -22,7 +22,7 @@ class Account {
 public:
 	QString name;
     int ID;
-	QString password;
+    QString password = "000000";
 
 public:
     Account(){}

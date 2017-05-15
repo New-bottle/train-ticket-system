@@ -309,7 +309,8 @@ bool sjtu::TTS::load_ascii() {
             auto user = server.find_user(ans.ID);
             user->name = ans.name;
         } else {
-           _add_user(ans.name, ans.ID);
+           auto user = _add_user(ans.name, ans.ID);
+           std::cout << user->ID << std::endl;
         }
         buy_tickets_data tmp;
         tmp.ID = ans.ID;
@@ -639,7 +640,7 @@ sjtu::TTS::BuyReturnData sjtu::TTS::operation_transform(QString str)
 
     QTextStream cin1(&parts[1]);
 //	ans.ID = parts[1];
-    cin1 >> ans.ID;
+    ans.ID = parts[1].toInt();
 
     ans.operation = parts[2];
 
