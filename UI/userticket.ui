@@ -76,22 +76,42 @@
       </layout>
      </item>
      <item>
-      <widget class="QListWidget" name="listWidget">
-       <item>
+      <widget class="QTableWidget" name="tableWidget_2">
+       <row>
         <property name="text">
-         <string>新建项目</string>
+         <string>新建行</string>
         </property>
-       </item>
-       <item>
+       </row>
+       <row>
         <property name="text">
-         <string>新建项目</string>
+         <string>新建行</string>
         </property>
-       </item>
-       <item>
+       </row>
+       <row>
         <property name="text">
-         <string>新建项目</string>
+         <string>新建行</string>
         </property>
-       </item>
+       </row>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
       </widget>
      </item>
      <item>

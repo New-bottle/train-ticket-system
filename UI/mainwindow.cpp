@@ -4,6 +4,7 @@
 #include "adminlogin.h"
 #include "adminregister.h"
 #include "userregister.h"
+#include "search.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -39,4 +40,10 @@ void MainWindow::on_commandLinkButton_2_clicked()
 {
     Adminregister a_reg;
     a_reg.exec();
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    search sea;
+    sea.exec();
 }

@@ -37,7 +37,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox_4">
+      <widget class="QComboBox" name="start_city">
        <item>
         <property name="text">
          <string>北京</string>
@@ -63,7 +63,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox_5">
+      <widget class="QComboBox" name="end_city">
        <item>
         <property name="text">
          <string>北京</string>
@@ -79,10 +79,10 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox_6"/>
+      <widget class="QComboBox" name="time_city"/>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_7">
+      <widget class="QPushButton" name="query_by_city">
        <property name="text">
         <string>按城市查询</string>
        </property>
@@ -100,7 +100,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QComboBox" name="start_station">
        <item>
         <property name="text">
          <string>北京</string>
@@ -126,7 +126,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox_2">
+      <widget class="QComboBox" name="end_station">
        <item>
         <property name="text">
          <string>北京</string>
@@ -142,10 +142,10 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox_3"/>
+      <widget class="QComboBox" name="time_station"/>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_6">
+      <widget class="QPushButton" name="query_by_station">
        <property name="text">
         <string>按站查询</string>
        </property>
@@ -167,17 +167,42 @@
       </layout>
      </item>
      <item>
-      <widget class="QListWidget" name="listWidget">
-       <item>
+      <widget class="QTableWidget" name="tableWidget_2">
+       <row>
         <property name="text">
-         <string>新建项目</string>
+         <string>新建行</string>
         </property>
-       </item>
-       <item>
+       </row>
+       <row>
         <property name="text">
-         <string>新建项目</string>
+         <string>新建行</string>
         </property>
-       </item>
+       </row>
+       <row>
+        <property name="text">
+         <string>新建行</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>新建行</string>
+        </property>
+       </row>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
       </widget>
      </item>
      <item>

@@ -2,6 +2,7 @@
 #define USERTICKET_H
 
 #include <QDialog>
+#include <QTableWidgetItem>
 
 namespace Ui {
 class userticket;
@@ -25,6 +26,8 @@ private slots:
     void on_pushButton_3_clicked();
 
     void on_pushButton_6_clicked();
+
+    void on_tableWidget_2_itemClicked(QTableWidgetItem *item);
 
 private:
     Ui::userticket *ui;

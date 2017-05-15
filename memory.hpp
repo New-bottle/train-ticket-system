@@ -30,8 +30,8 @@ public:
         using std::cout;
         using std::endl;
         cout << "counter.size() = " << counter.size()  << endl;
-        for (int i = 0; i < counter.size(); ++i)
-            cout << counter[i] << ' ' ;
+//        for (int i = 0; i < counter.size(); ++i)
+//            cout << counter[i] << ' ' ;
         cout << endl;
 		out << counter;
 		out << recycler;

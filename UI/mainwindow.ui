@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>424</width>
     <height>350</height>
    </rect>
   </property>
@@ -64,6 +64,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="text">
+         <string>游客登录</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item>
@@ -91,7 +98,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>424</width>
      <height>26</height>
     </rect>
    </property>

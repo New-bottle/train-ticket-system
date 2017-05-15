@@ -43,8 +43,14 @@ private:
 				heap(heap), value(value), prev(prev), next(next), left(left), right(right) {}
 
 		~node() {
-			if (value) delete value;
-			if (prev) delete prev;
+            node *n = this -> prev;
+            while (n) {
+                node *m = n;
+                n = n -> prev;
+                m -> prev = nullptr;
+                delete m;
+            }
+            if (value) delete value;
 		}
 	};
 
