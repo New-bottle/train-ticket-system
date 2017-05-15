@@ -24,7 +24,22 @@ typedef memory_pool<Train>::pool_ptr   train_ptr;
 typedef memory_pool<Ticket>::pool_ptr  ticket_ptr;
 
 struct Date {
+
     int year = 0, month = 0, day = 0;
+
+    static int days_per_month[13];
+
+    void incre_day() {
+        ++day;
+        if (day > days_per_month[month]) {
+            day = 1;
+            ++month;
+            if (month > 13) {
+                month = 1;
+                ++year;
+            }
+        }
+    }
 
     Date(){}
     Date(int date) {
@@ -49,6 +64,25 @@ struct Date {
             day += (date[i].unicode()-'0') * t;
             t /= 10;
         }
+    }
+
+
+    Date& operator++()
+    {
+        const int days_per_month[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 31, 30};
+        ++day;
+        if (day > days_per_month[month]) {
+            day = 1;
+            ++month;
+            if (month > 12)
+                ++year;
+        }
+        return *this;
+    }
+    Date operator++(int) {
+        auto tmp = *this;;
+        ++(*this);
+        return tmp;
     }
 
 
@@ -214,8 +248,20 @@ struct Train {
 
     line_ptr line;
     Date date;
-    bool selling = 0;
+    bool selling = 1;
+    // [kind][station]
     vector<vector<int>> station_available_tickets;
+
+    void init(const line_ptr &_line, Date _date) {
+        line = _line;
+        date = _date;
+        vector<int> tmp;
+        for (int i = 0; i < line->stations.size(); ++i)
+            tmp.push_back(200);
+        for (int i = 0; i < line->seat_kind_names.size(); ++i)
+            station_available_tickets.push_back(tmp);
+    }
+
     /* saves the number of remaining tickets for each station
      * e.g. station 0--1--2--3--4 with capacity 200 seats, then
      * station_available_ticket[] = {200, 200, 200, 200} //Only four interval
