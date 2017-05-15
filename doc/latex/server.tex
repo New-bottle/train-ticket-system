@@ -1,33 +1,144 @@
 \section{Server}
 
 \subsection{综述}
-    server里面存储各种信息，同时实现了一些接口
+    server里面用map存储各种信息，同时实现了一些与相应的map交互的接口
 
     TTS(short for Train-Ticket-System)
     包装了server与前端交互的所有接口
 
 \subsection{server}
-    \subsubsection{成员结构体}
+    \subsubsection{成员变量}
+    用map分别存储user, admin, line, city, Station
     \begin{itemize}
-    \item {LineData}
-
-    \item {ButReturnData}
-
-    \item {StationData}
-
-    \item {CityData}
-
-    \item {TrainData}
-    
+        \item map<int, user_ptr> users
+        ID -> 指向user的指针
+        \item map<int, admin_ptr> admins
+        ID -> 指向admin的指针
+        \item map<QString, line_ptr> lines
+        车次号 -> 指向该line的指针
+        \item map<QString, city_ptr> cities
+        城市名 -> 指向该city的指针
+        \item map<QString, station_ptr> stations
+        车站名 -> 指向该station的指针
     \end{itemize}
 
     \subsubsection{接口}
     \begin{itemize}
-    \item {query_train(A, B, Date)}
-    A和B均可为 City 或 Station
-    返回一个存储着所有合法的train的指针的vector，
-    为了提高效率，只返回指向该vector的smart_ptr
+    \item{find}
+        返回相应指向相应类型对象的pool_ptr
+        \begin{itemize}
+        \item {find_city(const QString &name)}
+        \item {find_user(const int &ID}
+        \item {find_admin(const int &ID}
+        \item {find_station(const QString &name}
+        \item {find_line(const QString &name}
+        \end{itemize}
     
-    \item {add_station(const StationData &)}
+    \item{check}
+        返回某个city/user/...是否已经在map中存在
+        \begin{itemize}
+        \item {bool check_city(const QString& name)}
+        传入一个城市名(字符串)，检查这个城市是否已经存在于map中
+        \item {bool check_user(const QString& name)}
+        \item {bool check_admin(const QString& name)}
+        \item {bool check_station(const QString& name)}
+        \item {bool check_line(const QString& name)}
+        \end{itemize}
     
-    \subsubsection{}
+    \item{add}
+        将某个对象插入到相应的map中（指向该对象的指针）
+        \begin{itemize}
+        \item {bool add_city(const QString& name)}
+        \item {bool add_user(const QString& name)}
+        \item {bool add_admin(const QString& name)}
+        \item {bool add_station(const QString& name)}
+        \item {bool add_line(const QString& name)}
+        \end{itemize}
+    \item{delete}
+        \begin{itemize}
+        \item void delete_line(const QString & line)
+        删除该线路，传入参数是该line的车次
+        \end{itemize}
+    \end{itemize}
+
+\subsection{TTS}
+    \subsubsection{成员变量}
+    \begin{itemize}
+    \item (Server)server
+    server对象
+    \item (int) id_cnt
+    id的全局计数器
+    \item (deque<Log>) logs
+    全局的log
+    \end{itemize}
+    
+    \subsubsection{辅助结构体}
+    存储为了添加所用的所有信息
+    \begin{itemize}
+    \item {LineData}
+        用来存储切分好的Line的相关信息，包括车次，所有车站名，时间等
+    \item {ButReturnData}
+        用来存储切分好的买票退票信息，包括买票人的ID、name、买票车次、座位类型、张数等
+    \item {StationData}
+        站名，以及这个站属于哪个城市
+    \item {CityData}
+        城市名
+    \item {TrainData}
+        车次，日期，卖票状态，车票余量（使用vector套vector）
+    \end{itemize}
+
+    \subsubsection{内部成员函数}
+    \begin{itemize}
+    \item query
+        \begin{itemize}
+        \item (bool) add_station(const StationData&)
+        用一个station所需的所有信息，新加一个station
+        \item (bool) add_line(const LineData&)
+        用一个line所需的所有信息，新加一个line
+        \item (bool) add_city(const CityData&)
+        用一个city所需的所有信息，新加一个city
+        \item (bool) add_train(const TrainData&)
+        用一个train所需的所有信息，新加一个train
+        \end{itemize}
+
+    \subsubsection{API}
+    \item void add_log(const QString &log)
+    添加一条操作记录
+    \item (vector<query_ticket_ans>) query_city_city(const query_ticket_cc_data & data)
+    按照从城市到城市查询
+    \item (vector<query_ticket_ans>) query_station_station(const query_ticket_ss_data & data)
+    按照从车站到车站查询
+    \item (vector<query_my_order_ans>) query_my_order(const query_my_order_data & data)
+    查看我的订单
+    
+    \item (bool) add_line(const QString & data);
+    添加一条线路，调用parser进行切分
+    \item (login_user_ans) login_user(const login_user_data & data);
+    用户登录
+    \item (login_admin_ans) login_admin(const login_admin_data & data);
+    管理员登录
+    \item (return_tickets_ans) return_tickets(const return_tickets_data & data);
+    退票（用户）
+    \item (buy_tickets_ans) buy_tickets(const buy_tickets_data & data);
+    买票（用户）
+
+    \item (delete_line_ans) delete_line(const delete_line_data & data);
+    删除线路（管理员）
+    \item (register_user_ans) register_user(const register_user_data & data);
+    注册用户
+    \item (register_admin_ans) register_admin(const register_admin_data & data);
+    注册管理员
+
+    \subsubsection{辅助函数}
+    \begin{itemize}
+    \item {load_ascii()}
+    从文本文档中读取初始信息
+    \item {load_binary()}
+    从二进制文件中读档
+    \item {save_binary()}
+    向二进制文件中存档
+    \item {LineData line_transform(QString str)}
+    将一个用逗号和换行符分割的QString转换成LineData类型的对象
+    \item {BuyReturnData operation_transform(QString str)}
+    将一行买票操作的信息字符串转换成一个BuyReturnData类型的对象
+    \end{itemize}
