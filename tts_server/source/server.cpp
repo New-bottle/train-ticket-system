@@ -253,6 +253,21 @@ int sjtu::TTS::register_admin(const QString & name, const QString & password) {
 }
 
 bool sjtu::TTS::load_ascii() {
+    memory_pool<User>::start_counting();
+    memory_pool<Admin>::start_counting();
+    memory_pool<Station>::start_counting();
+    memory_pool<City>::start_counting();
+    memory_pool<Line>::start_counting();
+    memory_pool<Train>::start_counting();
+    memory_pool<Ticket>::start_counting();
+    memory_pool<Train>::term = 1;
+    memory_pool<Line>::term = 1;
+    memory_pool<Station>::term = 1;
+    memory_pool<City>::term = 1;
+    memory_pool<User>::term = 1;
+    memory_pool<Account>::term = 1;
+    memory_pool<Ticket>::term = 1;
+
     QDir dir = QDir::current();
     QString directory = QDir::currentPath();
     directory += "/../train-ticket-system/trains.csv";
@@ -395,13 +410,20 @@ bool sjtu::TTS::load_binary() {
 	QDataStream fin(&server_file);
 
 	fin >> server;
-	memory_pool<User>::start_counting();
-	memory_pool<Admin>::start_counting();
-	memory_pool<Station>::start_counting();
-	memory_pool<City>::start_counting();
-	memory_pool<Line>::start_counting();
-	memory_pool<Train>::start_counting();
-	memory_pool<Ticket>::start_counting();
+    memory_pool<User>::start_counting();
+    memory_pool<Admin>::start_counting();
+    memory_pool<Station>::start_counting();
+    memory_pool<City>::start_counting();
+    memory_pool<Line>::start_counting();
+    memory_pool<Train>::start_counting();
+    memory_pool<Ticket>::start_counting();
+    memory_pool<Train>::term = 1;
+    memory_pool<Line>::term = 1;
+    memory_pool<Station>::term = 1;
+    memory_pool<City>::term = 1;
+    memory_pool<User>::term = 1;
+    memory_pool<Account>::term = 1;
+    memory_pool<Ticket>::term = 1;
 //	fin >> users >> admins >> lines >> cities >> stations;
     return true;
 }
@@ -410,6 +432,7 @@ void sjtu::TTS::save_binary() {
 	QString path = QDir::currentPath();
 	path += "/../train-ticket-system/data/";
 //	directory = path + "/../train-ticket-system/operation.dat";
+    path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/";
 
 	QString User_file_name = "Users.dat";
 	QFile User_file(path + User_file_name);
@@ -464,8 +487,10 @@ void sjtu::TTS::save_binary() {
 
 //Constructor
 sjtu::TTS::TTS() {
-	if (load_binary()) return;
-	else load_ascii();
+    if (load_binary())
+        return;
+    else
+        load_ascii();
 }
 sjtu::TTS::~TTS() {
     save_binary();
@@ -488,7 +513,8 @@ bool sjtu::TTS::add_line(const sjtu::TTS::LineData &line_data) {
         if (!server.check_station(station_name)) {
             QString city_name;
             city_name.push_back(station_name[0]);
-            city_name.push_back(station_name[1]);
+            if (station_name.size() >= 2)
+                city_name.push_back(station_name[1]);
             add_station(StationData(station_name, city_name));
         }
         line->stations.push_back(

@@ -30,7 +30,7 @@ private:
 			new(storage + i) T(tem[i]);
             tem[i].~T();
         }
-		operator delete [](tem);
+        operator delete [](tem);
     }
 
 public:

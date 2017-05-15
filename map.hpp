@@ -62,8 +62,6 @@ private:
 		ans->prev = left.second;
 		if (left.second)
 			left.second->next = ans;
-		else
-			nbegin = ans;
 		pair<node *, node *> right = in(is, ans);
 		ans->right = right.first;
 		return pair<node *, node *>(ans, right.second);
@@ -95,8 +93,6 @@ private:
 		ans->prev = left.second;
 		if (left.second)
 			left.second->next = ans;
-		else
-			nbegin = ans;
 		pair<node *, node *> right = in(is, ans);
 		ans->right = right.first;
 		return pair<node *, node *>(ans, right.second);
@@ -641,7 +637,9 @@ public:
 		pair<node *, node *> n = m.in(is, nullptr);
 		m.nend->left = n.first;
 		m.nend->prev = n.second;
-		n.second->next = m.nend;
+        if (n.second)
+            n.second->next = m.nend;
+        for (m.nbegin = m.nend; m.nbegin -> left; m.nbegin = m.nbegin -> left);
 		return is;
 	}
 };
