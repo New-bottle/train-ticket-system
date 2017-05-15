@@ -2,6 +2,7 @@
 #define QUERY_H
 
 #include <QString>
+#include "../../vector.hpp"
 
 namespace sjtu {
 
@@ -147,9 +148,47 @@ struct add_train_data {
 };
 typedef bool add_train_ans;
 
+struct change_password_data {
+    int ID;
+    QString new_password;
+};
+typedef bool change_password_ans;
+
+struct start_selling_data {
+    QString line_name;
+    int date;
+};
+typedef bool start_selling_ans;
+
+struct end_selling_data {
+    QString line_name;
+    int date;
+};
+typedef bool end_selling_ans;
+
+struct check_user_data {
+    // admin
+    int ID;
+};
+struct check_user_ans {
+    QString name;
+    vector<query_my_order_ans> tickets;
+};
+
+struct check_line_data {
+    QString line_name;
+};
+struct check_line_ans {
+    QString line_name;
+    vector<QString> seat_kind_names;
+    vector<QString> station_names;
+    vector<int> arr_time;
+    vector<int> dep_time;
+    vector<vector<double>> price;
+
+};
 
 int transfer_date(const QString & str);
-
 
 /*函数接口名
  *

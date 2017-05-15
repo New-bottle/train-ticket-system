@@ -1,6 +1,6 @@
 #include "../../tts_server/header/query.h"
 
-sjtu:: transfer_date(const QString & str)
+int sjtu::transfer_date(const QString & str)
 {
     int ans = 0;
     for(int i = 0; i < str.length(); ++i)

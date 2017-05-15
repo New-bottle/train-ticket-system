@@ -24,8 +24,11 @@ double sjtu::Train::calulate_price(const QString &dep, const QString &arr, const
 int sjtu::Train::min_avail(const QString &dep, const QString &arr, const QString &seat_type) {
 	int l = line->find_pos(dep), r = line->find_pos(arr),
 		k = line->seat_type(seat_type), ans = 1e9;
-	for (int i = l; i < r; ++i)
+    for (int i = l; i < r; ++i) {
 		ans = std::min(ans, station_available_tickets[k][i]);
+        if (line->price[k][i] == -1)
+            return -1;
+    }
 	return ans;
 }
 
