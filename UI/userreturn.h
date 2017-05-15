@@ -24,6 +24,12 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_show_order_clicked();
+
+    void on_tableWidget_clicked(const QModelIndex &index);
+
+    void on_pushButton_5_clicked();
+
 private:
     Ui::userreturn *ui;
 };

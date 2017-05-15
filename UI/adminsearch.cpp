@@ -4,6 +4,7 @@
 #include <QTableWidgetItem>
 #include "../tts_server/header/query.h"
 #include "../tts_server/header/server.h"
+#include <QAbstractItemView>
 
 extern sjtu::TTS tts;
 
@@ -12,6 +13,10 @@ adminsearch::adminsearch(QWidget *parent) :
     ui(new Ui::adminsearch)
 {
     ui->setupUi(this);
+    ui->tableWidget_2->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidget_2->setSortingEnabled(true);
+    ui->tableWidget_2->setModel(model);
 }
 
 adminsearch::~adminsearch()

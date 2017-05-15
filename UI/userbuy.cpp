@@ -10,6 +10,7 @@
 #include "chooseseat.h"
 #include "../tts_server/header/query.h"
 #include <QModelIndex>
+#include <QAbstractItemView>
 
 extern sjtu::TTS tts;
 extern int ID;
@@ -20,6 +21,10 @@ userbuy::userbuy(QWidget *parent) :
     ui(new Ui::userbuy)
 {
     ui->setupUi(this);
+    ui->tableWidget_2->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidget_2->setSortingEnabled(true);
+    ui->tableWidget_2->setModel(model);
 }
 
 userbuy::~userbuy()
