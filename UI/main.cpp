@@ -5,12 +5,16 @@
 #include "../tts_server/header/forward_declaration.h"
 #include "../tts_server/header/server.h"
 #include "../memory.hpp"
+#include <QTextCodec>
 
 sjtu::TTS tts;
 int ID;
 
 int main(int argc, char *argv[])
 {
+
+//    QTextCodec::setCodecForLocale(QTextCodec::codecForName("gbk"));
+//    QTextCodec::setCodecForTr(QTextCodec::codecForName("gbk"));
     QApplication a(argc, argv);
     MainWindow w;
     w.show();

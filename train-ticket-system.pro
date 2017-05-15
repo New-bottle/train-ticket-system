@@ -100,6 +100,5 @@ FORMS    += \
 DISTFILES += \
     log.txt
 
-RESOURCES += \
-    pictures.qrc
+RESOURCES +=
 
