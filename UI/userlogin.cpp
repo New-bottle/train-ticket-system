@@ -36,6 +36,8 @@ void userlogin::on_loginBtn_clicked()
         ui->pwdLineEdit->clear();
         ui->userLineEdit->setFocus();
     }
+    else
+    {
     if(tts.login_user(sjtu::login_user_data(ui->userLineEdit->text().toInt(), ui->pwdLineEdit->text())))
     {
         ID = ui->userLineEdit->text().toInt();
@@ -48,6 +50,7 @@ void userlogin::on_loginBtn_clicked()
         ui->userLineEdit->clear();
         ui->pwdLineEdit->clear();
         ui->userLineEdit->setFocus();
+    }
     }
 }
 

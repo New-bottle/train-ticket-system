@@ -15,6 +15,11 @@ public:
     explicit userchangepwd(QWidget *parent = 0);
     ~userchangepwd();
 
+private slots:
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
     Ui::userchangepwd *ui;
 };

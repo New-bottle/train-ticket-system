@@ -40,6 +40,8 @@ void adminlogin::on_loginBtn_clicked()
         ui->pwdLineEdit->clear();
         ui->userLineEdit->setFocus();
     }
+    else
+    {
     if(tts.login_admin(sjtu::login_admin_data(ui->userLineEdit->text().toInt(), ui->pwdLineEdit->text())))
     {
         ID = ui->userLineEdit->text().toInt();
@@ -52,5 +54,6 @@ void adminlogin::on_loginBtn_clicked()
         ui->userLineEdit->clear();
         ui->pwdLineEdit->clear();
         ui->userLineEdit->setFocus();
+    }
     }
 }
