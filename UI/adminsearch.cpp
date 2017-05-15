@@ -27,7 +27,7 @@ adminsearch::~adminsearch()
 void adminsearch::on_search_by_station_clicked()
 {
     ui->tableWidget->clear();
-    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_station_station(sjtu::query_ticket_data(ui->start_station, ui->end_station, ui->time_station));
+    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_station_station(sjtu::query_ticket_ss_data(ui->start_station->currentText(), ui->end_station->currentText(), ui->time_station->currentText()));
     for(int i = 0; i < vec.size(); ++i)
     {
         QTableWidgetItem * one = new QTableWidgetItem(vec[i].train_name);
@@ -52,7 +52,7 @@ void adminsearch::on_search_by_station_clicked()
 void adminsearch::on_search_by_city_clicked()
 {
     ui->tableWidget->clear();
-    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_city_city(sjtu::query_ticket_data(ui->start_city, ui->end_city, ui->time_city));
+    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_city_city(sjtu::query_ticket_cc_data(ui->start_city->currentText(), ui->end_city->currentText(), ui->time_city->currentText()));
     for(int i = 0; i < vec.size(); ++i)
     {
         QTableWidgetItem * one = new QTableWidgetItem(vec[i].train_name);

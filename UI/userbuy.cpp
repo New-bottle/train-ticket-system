@@ -11,20 +11,21 @@
 #include "../tts_server/header/query.h"
 #include <QModelIndex>
 #include <QAbstractItemView>
+#include <QMessageBox>
 
 extern sjtu::TTS tts;
 extern int ID;
-QModelIndex ind;
+QModelIndex Ind;
 
 userbuy::userbuy(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::userbuy)
 {
     ui->setupUi(this);
-    ui->tableWidget_2->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->tableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableWidget_2->setSortingEnabled(true);
-    ui->tableWidget_2->setModel(model);
+    ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidget->setSortingEnabled(true);
+//    ui->tableWidget->setModel(model);
 }
 
 userbuy::~userbuy()
@@ -52,7 +53,7 @@ void userbuy::on_pushButton_6_clicked(){}
 void userbuy::on_search_by_station_clicked()
 {
     ui->tableWidget->clear();
-    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_station_station(sjtu::query_ticket_data(ui->start_by_station, ui->end_by_station, ui->time_by_station));
+    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_station_station(sjtu::query_ticket_ss_data(ui->start_by_station->currentText(), ui->end_by_station->currentText(), ui->time_by_station->currentText()));
     for(int i = 0; i < vec.size(); ++i)
     {
         QTableWidgetItem * one = new QTableWidgetItem(vec[i].train_name);
@@ -62,7 +63,7 @@ void userbuy::on_search_by_station_clicked()
         QTableWidgetItem * five = new QTableWidgetItem(vec[i].end_station);
         QTableWidgetItem * six = new QTableWidgetItem(vec[i].end_time);
         QTableWidgetItem * seven = new QTableWidgetItem(vec[i].seat_kind);
-        QTableWidgetItem * one = new QTableWidgetItem(vec[i].ticket_left);
+        QTableWidgetItem * eight = new QTableWidgetItem(vec[i].ticket_left);
         ui->tableWidget->setItem(i + 1, 2, one);
         ui->tableWidget->setItem(i + 1, 3, two);
         ui->tableWidget->setItem(i + 1, 4, three);
@@ -77,7 +78,7 @@ void userbuy::on_search_by_station_clicked()
 void userbuy::on_search_by_city_clicked()
 {
     ui->tableWidget->clear();
-    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_city_city(sjtu::query_ticket_data(ui->start_by_city, ui->end_by_city, ui->time_by_city));
+    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_city_city(sjtu::query_ticket_cc_data(ui->start_by_city->currentText(), ui->end_by_city->currentText(), ui->time_by_city->currentText().toInt()));//need to be done
     for(int i = 0; i < vec.size(); ++i)
     {
         QTableWidgetItem * one = new QTableWidgetItem(vec[i].train_name);
@@ -87,7 +88,7 @@ void userbuy::on_search_by_city_clicked()
         QTableWidgetItem * five = new QTableWidgetItem(vec[i].end_station);
         QTableWidgetItem * six = new QTableWidgetItem(vec[i].end_time);
         QTableWidgetItem * seven = new QTableWidgetItem(vec[i].seat_kind);
-        QTableWidgetItem * one = new QTableWidgetItem(vec[i].ticket_left);
+        QTableWidgetItem * eight = new QTableWidgetItem(vec[i].ticket_left);
         ui->tableWidget->setItem(i + 1, 2, one);
         ui->tableWidget->setItem(i + 1, 3, two);
         ui->tableWidget->setItem(i + 1, 4, three);
@@ -109,12 +110,12 @@ void userbuy::on_pushButton_3_clicked()
 {
     sjtu::buy_tickets_data data;
     data.ID = ID;
-    data.train_name = ui->tableWidget->itemAt(Ind.row(), 2);
-    data.start_date = ui->tableWidget->itemAt(Ind.row(), 3);
-    data.start_station = ui->tableWidget->itemAt(Ind.row(), 4);
-    data.end_station = ui->tableWidget->itemAt(Int.row(), 6);
-    data.seat_kind = ui->tableWidget->itemAt(Ind.row(), 8);
-    data.ticket_num = ui->ticket_number;
+    data.train_name = ui->tableWidget->itemAt(Ind.row(), 2)->text();
+    data.start_date = ui->tableWidget->itemAt(Ind.row(), 3)->text().toInt();//need to be done
+    data.start_station = ui->tableWidget->itemAt(Ind.row(), 4)->text();
+    data.end_station = ui->tableWidget->itemAt(Ind.row(), 6)->text();
+    data.seat_kind = ui->tableWidget->itemAt(Ind.row(), 8)->text();
+    data.ticket_num = ui->ticket_number->value();
     bool success = tts.buy_tickets(data);
     if(success)
     {
