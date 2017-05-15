@@ -5,6 +5,8 @@
 #include "../header/train_manager.h"
 #include <QString>
 
+int sjtu::Date::days_per_month[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
 QString sjtu::Train::get_name() {
 	return line->name;
 }

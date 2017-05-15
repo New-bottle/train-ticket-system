@@ -328,12 +328,14 @@ sjtu::user_ptr sjtu::TTS::_add_user(const QString &name, int ID) {
 bool sjtu::TTS::load_binary() {
 	QString path = QDir::currentPath();
 	path += "/../train-ticket-system/data/";
+    path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/";
+
 	memory_pool<User>::end_counting();
 	QString User_file_name = "Users.dat";
 	QFile User_file(path + User_file_name);
 	if (!User_file.open(QIODevice::ReadOnly)) return false;
 	QDataStream User_fin(&User_file);
-	memory_pool<User>::save(User_fin);
+    memory_pool<User>::load(User_fin);
 	std::cout << "User load success! User's size = " << memory_pool<User>::size() << std::endl;
 
 	memory_pool<Admin>::end_counting();
@@ -341,7 +343,7 @@ bool sjtu::TTS::load_binary() {
 	QFile Admin_file(path + Admin_file_name);
 	Admin_file.open(QIODevice::ReadOnly);
 	QDataStream Admin_fin(&Admin_file);
-	memory_pool<Admin>::save(Admin_fin);
+    memory_pool<Admin>::load(Admin_fin);
 	std::cout << "Admin load success! Admin's size = " << memory_pool<Admin>::size() << std::endl;
 
 	memory_pool<Station>::end_counting();
@@ -349,7 +351,7 @@ bool sjtu::TTS::load_binary() {
 	QFile Station_file(path + Station_file_name);
 	Station_file.open(QIODevice::ReadOnly);
 	QDataStream Station_fin(&Station_file);
-	memory_pool<Station>::save(Station_fin);
+    memory_pool<Station>::load(Station_fin);
 	std::cout << "Station load success! Station's size = " << memory_pool<Station>::size() << std::endl;
 
 	memory_pool<City>::end_counting();
@@ -357,7 +359,7 @@ bool sjtu::TTS::load_binary() {
 	QFile City_file(path + City_file_name);
 	City_file.open(QIODevice::ReadOnly);
 	QDataStream City_fin(&City_file);
-	memory_pool<City>::save(City_fin);
+    memory_pool<City>::load(City_fin);
 	std::cout << "City load success! City's size = " << memory_pool<City>::size() << std::endl;
 
 	memory_pool<Line>::end_counting();
@@ -365,7 +367,7 @@ bool sjtu::TTS::load_binary() {
 	QFile Line_file(path + Line_file_name);
 	Line_file.open(QIODevice::ReadOnly);
 	QDataStream Line_fin(&Line_file);
-	memory_pool<Line>::save(Line_fin);
+    memory_pool<Line>::load(Line_fin);
 	std::cout << "Line load success! Line's size = " << memory_pool<Line>::size() << std::endl;
 
 	memory_pool<Train>::end_counting();
@@ -373,7 +375,7 @@ bool sjtu::TTS::load_binary() {
 	QFile Train_file(path + Train_file_name);
 	Train_file.open(QIODevice::ReadOnly);
 	QDataStream Train_fin(&Train_file);
-	memory_pool<Train>::save(Train_fin);
+    memory_pool<Train>::load(Train_fin);
 	std::cout << "Train load success! Train's size = " << memory_pool<Train>::size() << std::endl;
 
 	memory_pool<Ticket>::end_counting();
@@ -381,7 +383,7 @@ bool sjtu::TTS::load_binary() {
 	QFile Ticket_file(path + Ticket_file_name);
 	Ticket_file.open(QIODevice::ReadOnly);
 	QDataStream Ticket_fin(&Ticket_file);
-	memory_pool<Ticket>::save(Ticket_fin);
+    memory_pool<Ticket>::load(Ticket_fin);
 	std::cout << "Ticket load success! Ticket's size = " << memory_pool<Ticket>::size() << std::endl;
 
 	QString server_file_name = "Server.dat";
@@ -487,11 +489,20 @@ bool sjtu::TTS::add_line(const sjtu::TTS::LineData &line_data) {
             QString city_name;
             city_name.push_back(station_name[0]);
             city_name.push_back(station_name[1]);
-            add_station(StationData(city_name, station_name));
+            add_station(StationData(station_name, city_name));
         }
         line->stations.push_back(
                 server.find_station(station_name));
         line->stations.back()->lines.push_back(line);
+    }
+
+    // trains
+    Date l(20170328);
+    for (int i = 0; i < 30; ++i) {
+        train_ptr train = memory_pool<Train>::get_T();
+        train->init(line, l);
+        train->selling = 1;
+        line->trains.insert(make_pair(l, train));
     }
 
     return server.add_line(line);

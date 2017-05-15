@@ -27,6 +27,20 @@ struct Date {
 
     int year = 0, month = 0, day = 0;
 
+    static int days_per_month[13];
+
+    void incre_day() {
+        ++day;
+        if (day > days_per_month[month]) {
+            day = 1;
+            ++month;
+            if (month > 13) {
+                month = 1;
+                ++year;
+            }
+        }
+    }
+
     Date(){}
     Date(int date) {
         year = date / 10000;
