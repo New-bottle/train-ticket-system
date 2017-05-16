@@ -1,0 +1,18 @@
+adminadd                    h                  cpp
+admindelete
+adminlogin
+adminregister
+adminsearch
+search
+userbuy
+userlogin
+userregister
+userreturn
+userticket
+
+
+h 声明sender, receiver, transmit(), ...show() 定义 const int this_type
+cpp 定义transmit(), ....show(), 拆分那个函数	2
+
+
+还需要？
