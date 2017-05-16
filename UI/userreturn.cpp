@@ -99,11 +99,11 @@ void userreturn::on_pushButton_5_clicked()
     bool success = tts.return_tickets(data);
     if(success)
     {
-        QMessageBox::information(this, tr("退票成功"),tr("您可在我的订单中查看已购买的票"),QMessageBox::Yes);
+        QMessageBox::Information(this, tr("退票成功"),tr("您可在我的订单中查看已购买的票"),QMessageBox::Yes);
     }
     else
     {
-        QMessageBox::warning(this, tr("退票失败"),tr("您可尝试重新退票"),QMessageBox::Yes);
+        QMessageBox::Warning(this, tr("退票失败"),tr("您可尝试重新退票"),QMessageBox::Yes);
     }
 
 }

@@ -70,21 +70,36 @@
      </item>
      <item>
       <widget class="QTableWidget" name="tableWidget">
-       <row>
+       <column>
         <property name="text">
-         <string>新建行</string>
+         <string>新建列</string>
         </property>
-       </row>
-       <row>
+       </column>
+       <column>
         <property name="text">
-         <string>新建行</string>
+         <string>新建列</string>
         </property>
-       </row>
-       <row>
+       </column>
+       <column>
         <property name="text">
-         <string>新建行</string>
+         <string>新建列</string>
         </property>
-       </row>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
        <column>
         <property name="text">
          <string>新建列</string>

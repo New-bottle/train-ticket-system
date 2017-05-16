@@ -4,6 +4,7 @@
 #include "userreturn.h"
 #include "userticket.h"
 #include "userhistory.h"
+#include "userchangepwd.h"
 
 usermainwindow::usermainwindow(QWidget *parent) :
     QDialog(parent),
@@ -39,4 +40,10 @@ void usermainwindow::on_pushButton_13_clicked()
 {
     userhistory u_his;
     u_his.exec();
+}
+
+void usermainwindow::on_pushButton_14_clicked()
+{
+    userchangepwd u_cha;
+    u_cha.exec();
 }

@@ -25,8 +25,9 @@ void Adminregister::on_confirm_clicked()
     if(ui->register_num->text() != "FBI_WARNING")
     {
         QMessageBox::warning(this, tr("邀请码错误！"),tr("邀请码错误，你不是合格司机"),QMessageBox::Yes);
+        return;
     }
-    int id = tts.register_admin(ui->userLineEdit->text(), ui->pwdLineEdit->text());
+    int id = tts.register_admin(sjtu::register_admin_data(ui->userLineEdit->text(), ui->pwdLineEdit->text()));
     QLabel * label = new QLabel("你的id号是" + QString::number(id));
     label->show();
     adminlogin a_log;

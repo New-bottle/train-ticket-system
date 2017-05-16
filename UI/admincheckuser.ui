@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>admincheckuser</class>
+ <widget class="QDialog" name="admincheckuser">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>550</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="font">
+      <font>
+       <family>微软雅黑 Light</family>
+       <pointsize>18</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>查看用户信息</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>要查看的id</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="id"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>查询</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>回到主页</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="tableWidget">
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

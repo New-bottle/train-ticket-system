@@ -45,7 +45,11 @@ SOURCES +=\
     UI/search.cpp \
     UI/chooseseat.cpp \
     UI/adminsearch.cpp \
-    tts_server/source/query.cpp
+    tts_server/source/query.cpp \
+    UI/userchangepwd.cpp \
+    UI/adminstartend.cpp \
+    UI/searchbyline.cpp \
+    UI/admincheckuser.cpp
 
 HEADERS  += \
     vector.hpp \
@@ -77,7 +81,11 @@ HEADERS  += \
     UI/search.h \
     UI/chooseseat.h \
     tts_server/header/query.h \
-    UI/adminsearch.h
+    UI/adminsearch.h \
+    UI/userchangepwd.h \
+    UI/adminstartend.h \
+    UI/searchbyline.h \
+    UI/admincheckuser.h
 
 FORMS    += \
     UI/adminadd.ui \
@@ -96,7 +104,11 @@ FORMS    += \
     UI/search.ui \
     UI/chooseseat.ui \
     UI/beginwindow.ui \
-    UI/adminsearch.ui
+    UI/adminsearch.ui \
+    UI/userchangepwd.ui \
+    UI/adminstartend.ui \
+    UI/searchbyline.ui \
+    UI/admincheckuser.ui
 
 DISTFILES += \
     log.txt

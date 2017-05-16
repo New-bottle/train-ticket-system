@@ -71,6 +71,7 @@ void userticket::on_pushButton_6_clicked()
         QTableWidgetItem * six = new QTableWidgetItem(vec[i].end_time);
         QTableWidgetItem * seven = new QTableWidgetItem(vec[i].seat_kind);
         QTableWidgetItem * eight = new QTableWidgetItem(vec[i].ticket_number);
+//        ui->tableWidget_2->ro
         ui->tableWidget_2->setItem(i + 1, 2, one);
         ui->tableWidget_2->setItem(i + 1, 3, two);
         ui->tableWidget_2->setItem(i + 1, 4, three);

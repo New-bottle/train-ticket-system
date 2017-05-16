@@ -22,7 +22,7 @@ userregister::~userregister()
 
 void userregister::on_confirm_clicked()
 {
-    int id = tts.register_user(ui->userLineEdit->text(), ui->pwdLineEdit->text());
+    int id = tts.register_user(sjtu::register_user_data(ui->userLineEdit->text(), ui->pwdLineEdit->text()));
 //    QMessageBox::information(this, tr("id号"),tr("你的id号是" + QString::number(id)),QMessageBox::Yes);
     QLabel *label = new QLabel("你的id号是" + QString::number(id));
     label->show();
