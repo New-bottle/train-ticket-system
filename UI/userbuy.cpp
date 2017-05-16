@@ -35,7 +35,7 @@ userbuy::~userbuy()
     delete ui;
 }
 
-
+/*
 void userbuy::on_pushButton_clicked()
 {
     usermainwindow u_main;
@@ -51,9 +51,10 @@ void userbuy::on_pushButton_2_clicked()
 void userbuy::on_comboBox_activated(const QString &arg1){}
 
 void userbuy::on_pushButton_6_clicked(){}
-
+*/
 void userbuy::on_search_by_station_clicked()
 {
+
     ui->tableWidget->clear();
     QTableWidgetItem * oone = new QTableWidgetItem("车次号");
     QTableWidgetItem * ttwo = new QTableWidgetItem("出发日期");
@@ -94,6 +95,7 @@ void userbuy::on_search_by_station_clicked()
         ui->tableWidget->setItem(i + 1, 8, seven);
         ui->tableWidget->setItem(i + 1, 9, eight);
     }
+
 }
 
 void userbuy::on_search_by_city_clicked()
@@ -136,9 +138,9 @@ void userbuy::on_search_by_city_clicked()
         ui->tableWidget->setItem(i + 1, 9, eight);
     }
 }
-
+/*
 void userbuy::on_listWidget_itemDoubleClicked(QListWidgetItem *item){}
-
+*/
 void userbuy::on_tableWidget_clicked(const QModelIndex &index)
 {
     Ind_userbuy = index;
