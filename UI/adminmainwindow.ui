@@ -34,21 +34,21 @@
        <item>
         <widget class="QPushButton" name="pushButton">
          <property name="text">
-          <string>删除车次</string>
+          <string>删除线路</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_2">
          <property name="text">
-          <string>添加车次</string>
+          <string>添加线路</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_4">
          <property name="text">
-          <string>查询车次</string>
+          <string>添加车次</string>
          </property>
         </widget>
        </item>
