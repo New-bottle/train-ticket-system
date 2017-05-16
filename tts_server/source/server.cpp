@@ -1078,6 +1078,8 @@ sjtu::register_user_ans sjtu::TTS::register_user(const sjtu::register_user_data 
     log_file.flush();
     QTextStream log_fout(&log_file);
     log_fout << QString("用户注册：") << data.name << QString(" ID：") << ID << endl;
+    log_fout.flush();
+    log_file.close();
     return ID;
 }
 
@@ -1089,7 +1091,8 @@ sjtu::register_admin_ans sjtu::TTS::register_admin(const sjtu::register_admin_da
     log_file.flush();
     QTextStream log_fout(&log_file);
     log_fout << QString("管理员注册：") << data.name << QString(" ID：") << ID << endl;
-
+    log_fout.flush();
+    log_file.close();
     return register_admin(data.name, data.password);
 }
 
@@ -1121,8 +1124,24 @@ sjtu::add_train_ans sjtu::TTS::add_train(const sjtu::add_train_data & data) {
 
 sjtu::change_password_ans sjtu::TTS::change_password(const sjtu::change_password_data & data) {
     // TODO log
-
     auto user = server.find_user(data.ID);
+
+    QString path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/log.txt";
+    QFile log_file(path);
+    log_file.open(QIODevice::WriteOnly| QIODevice::Append);
+    log_file.flush();
+    QTextStream log_fout(&log_file);
+    log_fout << QString("用户") << user->ID << QString("修改了密码\n");
+
+    path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/users/"+ QString::number(user->ID) +"log.txt";
+    QFile user_file(path);
+    if(!user_file.open(QIODevice::WriteOnly | QIODevice::Append))
+        throw ;
+    user_file.flush();
+    QTextStream user_fout(&user_file);
+    user_fout << QString("修改了密码。\n");
+
+
     user->password = data.new_password;
     return true;
 }
