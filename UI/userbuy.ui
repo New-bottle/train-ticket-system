@@ -168,6 +168,21 @@
          <string>到达时间</string>
         </property>
        </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>新建列</string>
+        </property>
+       </column>
       </widget>
      </item>
      <item>
