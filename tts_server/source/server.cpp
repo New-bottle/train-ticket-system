@@ -550,7 +550,7 @@ bool sjtu::TTS::add_line(const sjtu::TTS::LineData &line_data) {
         line->stations.back()->lines.push_back(line);
     }
 
-    if (line->name == "G8903")
+    if (line->name == "D3145/D3148")
         std::cout << 1;
 
     // trains
@@ -567,7 +567,7 @@ bool sjtu::TTS::add_line(const sjtu::TTS::LineData &line_data) {
     bool flag = server.add_line(line);
     auto linet = server.find_line(line->name);
 
-    return server.add_line(line);
+    return flag;
 }
 
 bool sjtu::TTS::add_station(const sjtu::TTS::StationData &station_data) {
@@ -1114,7 +1114,7 @@ sjtu::add_train_ans sjtu::TTS::add_train(const sjtu::add_train_data & data) {
     log_fout << QString("添加车次")
              << data.line_name  << endl;
 
-    if (server.check_line(data.line_name))
+    if (!server.check_line(data.line_name))
         return false;
 
     Date l(data.ldata);
@@ -1124,6 +1124,7 @@ sjtu::add_train_ans sjtu::TTS::add_train(const sjtu::add_train_data & data) {
     while (!l.same_day(r)) {
         train_ptr train = memory_pool<Train>::get_T();
         train->init(line, l);
+        train->selling = 1;
         line->trains.insert(make_pair(l, train));
         ++l;
     }

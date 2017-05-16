@@ -184,21 +184,21 @@ struct Line {
     vector<int> dep_time;               // 离站时间
     vector<int> miles;                   // 距离始发站的里程
     vector<vector<double>> price;            // 从第i到第i+1站的第j种票票价
-
     // 给定日期的train
     map<Date, train_ptr, Date::cmp_date> trains;
 
     bool check_date(const Date & date) const {
-        return trains.find(date) != trains.cend();
+        bool flag = trains.find(date) != trains.cend();
+        return flag;
     }
 	friend QDataStream& operator >> (QDataStream &in, Line& rhs) {
 		in >> rhs.name >> rhs.seat_kind_names >> rhs.stations >> rhs.arr_time
-		   >> rhs.dep_time >> rhs.miles >> rhs.price;
+           >> rhs.dep_time >> rhs.miles >> rhs.price >> rhs.trains;
 		return in;
 	}
-	friend QDataStream& operator << (QDataStream &out, const Line &rhs) {
+    friend QDataStream& operator << (QDataStream &out, Line &rhs) {
 		out << rhs.name << rhs.seat_kind_names << rhs.stations << rhs.arr_time
-			<< rhs.dep_time << rhs.miles << rhs.price;
+            << rhs.dep_time << rhs.miles << rhs.price << rhs.trains;
 		return out;
 	}
 

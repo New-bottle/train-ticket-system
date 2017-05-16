@@ -633,7 +633,7 @@ public:
 		n.second->next = m.nend;
 		return is;
 	}
-	friend QDataStream &operator<<(QDataStream &os, map<Key, T, Compare> &m) {
+    friend QDataStream &operator<<(QDataStream &os, map<Key, T, Compare> &m) {
 		m.out(os, m.nend->left);
 		return os;
 	}
