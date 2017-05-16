@@ -42,10 +42,9 @@ userbuy::~userbuy()
 void userbuy::transmit(QByteArray package, int type) {
 	sender->abort(); receiver->abort();
 	this_type = type;
-	sender->writeDatagram(package, serverAddress, send_port);
-
 	receiver->bind(QHostAddress::LocalHost, receive_port);
 	connect(receiver, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()));
+	sender->writeDatagram(package, serverAddress, send_port);
 }
 
 void userbuy::on_pushButton_clicked()
@@ -83,6 +82,7 @@ void userbuy::on_search_by_station_clicked()
     ui->tableWidget->setHorizontalHeaderItem(7, ssix);
     ui->tableWidget->setHorizontalHeaderItem(8, ssev);
     ui->tableWidget->setHorizontalHeaderItem(9, eeig);
+	ui->tableWidget->show();
 	QByteArray package;
 	QTextStream sout(&package);
 	sout << sjtu::query_ticket_ss_data (ui->start_station->text(),
@@ -124,6 +124,7 @@ void userbuy::search_show(QString package) {
         ui->tableWidget->setItem(i + 1, 7, six);
         ui->tableWidget->setItem(i + 1, 8, seven);
         ui->tableWidget->setItem(i + 1, 9, eight);
+		ui->tableWidget->show();
     }
 }
 
@@ -146,6 +147,7 @@ void userbuy::on_search_by_city_clicked()
     ui->tableWidget->setHorizontalHeaderItem(7, ssix);
     ui->tableWidget->setHorizontalHeaderItem(8, ssev);
     ui->tableWidget->setHorizontalHeaderItem(9, eeig);
+	ui->tableWidget->show();
 //    sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_city_city(sjtu::query_ticket_cc_data(ui->start_city->text(), ui->end_city->text(), sjtu::transfer_date(ui->dateEdit_city->text())));//need to be done
 	QByteArray package;
 	QTextStream sout(&package);
@@ -200,12 +202,12 @@ void userbuy::readPendingDatagrams()
 			search_show(datagram);
 		else
 			buy_show(datagram);
-		sender->abort(); receiver->abort();
 		//数据接收在datagram里
 		/* readDatagram 函数原型
 		qint64 readDatagram(char *data,qint64 maxSize,QHostAddress *address=0,quint16 *port=0)
 		*/
 	}
+	sender->abort(); receiver->abort();
 }
 
 void userbuy::on_pushButton_4_clicked()

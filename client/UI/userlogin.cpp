@@ -78,7 +78,7 @@ void userlogin::readPendingDatagrams()
 		QByteArray datagram;
 		datagram.resize(receiver->pendingDatagramSize());
 		receiver->readDatagram(datagram.data(), datagram.size());
-		login_show(datagram);
 		sender->abort(); receiver->abort();
+		login_show(datagram);
 	}
 }

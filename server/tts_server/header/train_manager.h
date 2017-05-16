@@ -104,12 +104,14 @@ struct Date {
         return year == rhs.year && month == rhs.month && day == rhs.day;
     }
 
-    class cmp_date {
-    public:
-        bool operator()(const Date &a, const Date &b) const {
-            return a.same_day(b);
-        }
-    };
+	class cmp_date {
+	public:
+		bool operator()(const Date &a, const Date &b) const {
+			return a.year < b.year ||
+					(a.year == b.year && a.month < b.month) ||
+					(a.year == b.year && a.month == b.month && a.day < b.day);
+		}
+	};
 	friend QDataStream& operator >> (QDataStream &in, Date& rhs) {
         in >> rhs.year >> rhs.month >> rhs.day;
 		return in;

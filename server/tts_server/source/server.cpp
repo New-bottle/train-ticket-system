@@ -1129,6 +1129,7 @@ sjtu::add_train_ans sjtu::TTS::add_train(const sjtu::add_train_data & data) {
     while (!l.same_day(r)) {
         train_ptr train = memory_pool<Train>::get_T();
         train->init(line, l);
+		train->selling = 1;
         line->trains.insert(make_pair(l, train));
         ++l;
     }
