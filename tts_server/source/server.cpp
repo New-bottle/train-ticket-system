@@ -116,6 +116,7 @@ sjtu::TTS::query_train(const sjtu::City &from, const sjtu::City &to, sjtu::Date 
             }
             while (cur_station != (*cur_line)->stations.cend()) {
                 if ((*cur_station)->location->name == to.name) {
+//                    result->push_back((*cur_line)->trains[date]);
                     break;
                 }
                 ++cur_station;
@@ -199,7 +200,7 @@ sjtu::TTS::query_train(const sjtu::Station & from, const sjtu::Station & to, sjt
 //    for (from_station = from.stations.cbegin(); from_station != from.stations.cend() ; ++from_station) {
         vector<line_ptr>::const_iterator cur_line;
         for (cur_line = from.lines.cbegin(); cur_line != from.lines.cend(); ++cur_line) {
-            if (!(*cur_line)->check_date(date)) {
+            if (!(*cur_line)->check_date(date) || !(*cur_line)->trains[date]->selling) {
                 continue;
             }
             vector<station_ptr>::const_iterator cur_station = (*cur_line)->stations.cbegin();
@@ -207,7 +208,7 @@ sjtu::TTS::query_train(const sjtu::Station & from, const sjtu::Station & to, sjt
                 ++cur_station;
             }
             while (cur_station != (*cur_line)->stations.cend()) {
-                if ((*cur_station)->name != to.name) {
+                if ((*cur_station)->name == to.name) {
                     break;
                 }
                 ++cur_station;
@@ -815,16 +816,23 @@ sjtu::vector<sjtu::query_ticket_ans> sjtu::TTS::query_city_city(const sjtu::quer
         tmp.start_date = data.date;
         tmp.start_station = train.get_station_name(from.name);
         tmp.start_time = train.line->dep(tmp.start_station);
-        tmp.end_station = train.get_station_name(to.name);
-        tmp.end_time = train.line->arr(tmp.end_station);
-        for (int i = 0; i < (int)train.line->seat_kind_names.size(); ++i) {
-            tmp.seat_kind = train.line->seat_kind_names[i];
-            tmp.ticket_left = train.min_avail(tmp.start_station, tmp.end_station, tmp.seat_kind);
-            if (tmp.ticket_left < 0)
+
+        for (int j = 0; j < train.line->stations.size(); ++j) {
+            if (train.line->stations[j]->location->name != to.name)
                 continue;
-            ans.push_back(tmp);
+
+            tmp.end_station = train.line->stations[j]->name;
+            tmp.end_time = train.line->arr(j);
+            for (int k = 0; k < (int)train.line->seat_kind_names.size(); ++k) {
+               tmp.seat_kind = train.line->seat_kind_names[k];
+               tmp.ticket_left = train.min_avail(tmp.start_station, tmp.end_station, tmp.seat_kind);
+               if (tmp.ticket_left < 0)
+                  continue;
+               ans.push_back(tmp);
+            }
         }
     }
+
     return ans;
 }
 sjtu::vector<sjtu::query_ticket_ans> sjtu::TTS::query_station_station(const sjtu::query_ticket_ss_data & data) {
@@ -837,7 +845,8 @@ sjtu::vector<sjtu::query_ticket_ans> sjtu::TTS::query_station_station(const sjtu
 
     const Station & from = *server.find_station(data.dep_satation);
     const Station & to   = *server.find_station(data.arr_station);
-    const vector<train_ptr> & trains = *query_train(from, to, Date(data.date));
+    smart_ptr<vector<train_ptr>> trains_p= query_train(from, to, Date(data.date));
+    const vector<train_ptr> & trains = *trains_p;
 
     vector<query_ticket_ans> ans;
 

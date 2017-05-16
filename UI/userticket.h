@@ -27,7 +27,7 @@ private slots:
 
     void on_pushButton_6_clicked();
 
-    void on_tableWidget_2_itemClicked(QTableWidgetItem *item);
+    //void on_tableWidget_2_itemClicked(QTableWidgetItem *item);
 
     void on_return_ticket_button_clicked();
 

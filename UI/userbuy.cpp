@@ -3,8 +3,6 @@
 #include "usermainwindow.h"
 #include "userticket.h"
 #include "../tts_server/header/server.h"
-#include <QListWidget>
-#include <QListWidgetItem>
 #include "vector.hpp"
 #include <QString>
 #include "chooseseat.h"
@@ -14,6 +12,7 @@
 #include <QMessageBox>
 #include <QTableWidget>
 #include <QTableWidgetItem>
+#include <QStandardItemModel>
 
 extern sjtu::TTS tts;
 extern int ID;
@@ -26,7 +25,7 @@ userbuy::userbuy(QWidget *parent) :
     ui->setupUi(this);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableWidget->setSortingEnabled(true);
+    ui->tableWidget->setSortingEnabled(false);
 //    ui->tableWidget->setModel(model);
 }
 
@@ -35,27 +34,11 @@ userbuy::~userbuy()
     delete ui;
 }
 
-/*
-void userbuy::on_pushButton_clicked()
-{
-    usermainwindow u_main;
-    u_main.show();
-}
-
-void userbuy::on_pushButton_2_clicked()
-{
-    userticket u_tic;
-    u_tic.show();
-}
-
-void userbuy::on_comboBox_activated(const QString &arg1){}
-
-void userbuy::on_pushButton_6_clicked(){}
-*/
 void userbuy::on_search_by_station_clicked()
 {
 
     ui->tableWidget->clear();
+    ui->tableWidget->setRowCount(1000);
     QTableWidgetItem * oone = new QTableWidgetItem("车次号");
     QTableWidgetItem * ttwo = new QTableWidgetItem("出发日期");
     QTableWidgetItem * tthr = new QTableWidgetItem("始发站");
@@ -64,20 +47,34 @@ void userbuy::on_search_by_station_clicked()
     QTableWidgetItem * ssix = new QTableWidgetItem("到达时间");
     QTableWidgetItem * ssev = new QTableWidgetItem("座位种类");
     QTableWidgetItem * eeig = new QTableWidgetItem("车次号");
-    ui->tableWidget->setHorizontalHeaderItem(2, oone);
-    ui->tableWidget->setHorizontalHeaderItem(3, ttwo);
-    ui->tableWidget->setHorizontalHeaderItem(4, tthr);
-    ui->tableWidget->setHorizontalHeaderItem(5, ffou);
-    ui->tableWidget->setHorizontalHeaderItem(6, ffiv);
-    ui->tableWidget->setHorizontalHeaderItem(7, ssix);
-    ui->tableWidget->setHorizontalHeaderItem(8, ssev);
-    ui->tableWidget->setHorizontalHeaderItem(9, eeig);
+    ui->tableWidget->setHorizontalHeaderItem(0, oone);
+    ui->tableWidget->setHorizontalHeaderItem(1, ttwo);
+    ui->tableWidget->setHorizontalHeaderItem(2, tthr);
+    ui->tableWidget->setHorizontalHeaderItem(3, ffou);
+    ui->tableWidget->setHorizontalHeaderItem(4, ffiv);
+    ui->tableWidget->setHorizontalHeaderItem(5, ssix);
+    ui->tableWidget->setHorizontalHeaderItem(6, ssev);
+    ui->tableWidget->setHorizontalHeaderItem(7, eeig);
+    //QStandardItemModel * model = new QStandardItemModel();
+    /*model->setColumnCount(16);
+    model->setHeaderData(0, Qt::Horizontal, tr("车次"));
+    model->setHeaderData(0, Qt::Horizontal, tr("出发日期"));
+    model->setHeaderData(0, Qt::Horizontal, tr("始发站"));
+    model->setHeaderData(0, Qt::Horizontal, tr("出发时间"));
+    model->setHeaderData(0, Qt::Horizontal, tr("终点站"));
+    model->setHeaderData(0, Qt::Horizontal, tr("到达事件"));
+    model->setHeaderData(0, Qt::Horizontal, tr("座位种类"));
+    model->setHeaderData(0, Qt::Horizontal, tr("票价"));*/
+
     sjtu::vector<sjtu::query_ticket_ans> vec =
             tts.query_station_station(sjtu::query_ticket_ss_data(ui->start_station->text(),
                                                                  ui->end_station->text(),
                                                                  sjtu::transfer_date(ui->dateEdit_station->text())));//need to be done
+    int rows = 0;
     for(int i = 0; i < vec.size(); ++i)
     {
+        //ui->tableWidget->rowCount();
+        //ui->tableWidget->insertRow(rows);
         QTableWidgetItem * one = new QTableWidgetItem(vec[i].train_name);
         QTableWidgetItem * two = new QTableWidgetItem(vec[i].start_date);
         QTableWidgetItem * three = new QTableWidgetItem(vec[i].start_station);
@@ -86,14 +83,17 @@ void userbuy::on_search_by_station_clicked()
         QTableWidgetItem * six = new QTableWidgetItem(vec[i].end_time);
         QTableWidgetItem * seven = new QTableWidgetItem(vec[i].seat_kind);
         QTableWidgetItem * eight = new QTableWidgetItem(vec[i].ticket_left);
-        ui->tableWidget->setItem(i + 1, 2, one);
-        ui->tableWidget->setItem(i + 1, 3, two);
-        ui->tableWidget->setItem(i + 1, 4, three);
-        ui->tableWidget->setItem(i + 1, 5, four);
-        ui->tableWidget->setItem(i + 1, 6, five);
-        ui->tableWidget->setItem(i + 1, 7, six);
-        ui->tableWidget->setItem(i + 1, 8, seven);
-        ui->tableWidget->setItem(i + 1, 9, eight);
+
+        ui->tableWidget->setItem(rows, 0, one);
+        ui->tableWidget->setItem(rows, 1, two);
+        ui->tableWidget->setItem(rows, 2, three);
+        ui->tableWidget->setItem(rows, 3, four);
+        ui->tableWidget->setItem(rows, 4, five);
+        ui->tableWidget->setItem(rows, 5, six);
+        ui->tableWidget->setItem(rows, 6, seven);
+        ui->tableWidget->setItem(rows, 7, eight);
+        ui->tableWidget->show();
+        ++rows;
     }
 
 }
@@ -101,6 +101,7 @@ void userbuy::on_search_by_station_clicked()
 void userbuy::on_search_by_city_clicked()
 {
     ui->tableWidget->clear();
+    ui->tableWidget->setRowCount(100);
     QTableWidgetItem * oone = new QTableWidgetItem("车次号");
     QTableWidgetItem * ttwo = new QTableWidgetItem("出发日期");
     QTableWidgetItem * tthr = new QTableWidgetItem("始发站");
@@ -109,17 +110,20 @@ void userbuy::on_search_by_city_clicked()
     QTableWidgetItem * ssix = new QTableWidgetItem("到达时间");
     QTableWidgetItem * ssev = new QTableWidgetItem("座位种类");
     QTableWidgetItem * eeig = new QTableWidgetItem("车次号");
-    ui->tableWidget->setHorizontalHeaderItem(2, oone);
-    ui->tableWidget->setHorizontalHeaderItem(3, ttwo);
-    ui->tableWidget->setHorizontalHeaderItem(4, tthr);
-    ui->tableWidget->setHorizontalHeaderItem(5, ffou);
-    ui->tableWidget->setHorizontalHeaderItem(6, ffiv);
-    ui->tableWidget->setHorizontalHeaderItem(7, ssix);
-    ui->tableWidget->setHorizontalHeaderItem(8, ssev);
-    ui->tableWidget->setHorizontalHeaderItem(9, eeig);
+    ui->tableWidget->setHorizontalHeaderItem(0, oone);
+    ui->tableWidget->setHorizontalHeaderItem(1, ttwo);
+    ui->tableWidget->setHorizontalHeaderItem(2, tthr);
+    ui->tableWidget->setHorizontalHeaderItem(3, ffou);
+    ui->tableWidget->setHorizontalHeaderItem(4, ffiv);
+    ui->tableWidget->setHorizontalHeaderItem(5, ssix);
+    ui->tableWidget->setHorizontalHeaderItem(6, ssev);
+    ui->tableWidget->setHorizontalHeaderItem(7, eeig);
     sjtu::vector<sjtu::query_ticket_ans> vec = tts.query_city_city(sjtu::query_ticket_cc_data(ui->start_city->text(), ui->end_city->text(), sjtu::transfer_date(ui->dateEdit_city->text())));//need to be done
+    int rows = 0;
     for(int i = 0; i < vec.size(); ++i)
     {
+        //ui->tableWidget->rowCount();
+        //ui->tableWidget->insertRow(rows);
         QTableWidgetItem * one = new QTableWidgetItem(vec[i].train_name);
         QTableWidgetItem * two = new QTableWidgetItem(vec[i].start_date);
         QTableWidgetItem * three = new QTableWidgetItem(vec[i].start_station);
@@ -128,14 +132,16 @@ void userbuy::on_search_by_city_clicked()
         QTableWidgetItem * six = new QTableWidgetItem(vec[i].end_time);
         QTableWidgetItem * seven = new QTableWidgetItem(vec[i].seat_kind);
         QTableWidgetItem * eight = new QTableWidgetItem(vec[i].ticket_left);
-        ui->tableWidget->setItem(i + 1, 2, one);
-        ui->tableWidget->setItem(i + 1, 3, two);
-        ui->tableWidget->setItem(i + 1, 4, three);
-        ui->tableWidget->setItem(i + 1, 5, four);
-        ui->tableWidget->setItem(i + 1, 6, five);
-        ui->tableWidget->setItem(i + 1, 7, six);
-        ui->tableWidget->setItem(i + 1, 8, seven);
-        ui->tableWidget->setItem(i + 1, 9, eight);
+        ui->tableWidget->setItem(rows, 0, one);
+        ui->tableWidget->setItem(rows, 1, two);
+        ui->tableWidget->setItem(rows, 2, three);
+        ui->tableWidget->setItem(rows, 3, four);
+        ui->tableWidget->setItem(rows, 4, five);
+        ui->tableWidget->setItem(rows, 5, six);
+        ui->tableWidget->setItem(rows, 6, seven);
+        ui->tableWidget->setItem(rows, 7, eight);
+        ui->tableWidget->show();
+        ++rows;
     }
 }
 /*
