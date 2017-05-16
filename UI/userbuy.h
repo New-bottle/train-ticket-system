@@ -17,19 +17,19 @@ public:
     ~userbuy();
 
 private slots:
-    void on_pushButton_clicked();
+    //void on_pushButton_clicked();
 
-    void on_pushButton_2_clicked();
+    //void on_pushButton_2_clicked();
 
-    void on_comboBox_activated(const QString &arg1);
+    //void on_comboBox_activated(const QString &arg1);
 
-    void on_pushButton_6_clicked();
+    //void on_pushButton_6_clicked();
 
     void on_search_by_station_clicked();
 
     void on_search_by_city_clicked();
 
-    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
+    //void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
     void on_pushButton_3_clicked();
 

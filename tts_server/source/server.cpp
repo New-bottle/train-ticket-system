@@ -121,6 +121,7 @@ sjtu::TTS::query_train(const sjtu::City &from, const sjtu::City &to, sjtu::Date 
                 ++cur_station;
             }
             if (cur_station != (*cur_line)->stations.cend()) {
+//                auto t = (*)
                 result->push_back((*cur_line)->trains[date]);
                 std::cout << result->back()->date.toStr().toUtf8().constData() << std::endl;
             }
@@ -559,6 +560,7 @@ bool sjtu::TTS::add_line(const sjtu::TTS::LineData &line_data) {
         train->init(line, l);
         train->selling = 1;
         auto t = line->trains.insert(make_pair(l, train)).second;
+        auto tt = line->trains[l];
         l.incre_day();
     }
 
