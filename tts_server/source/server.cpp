@@ -350,8 +350,8 @@ sjtu::user_ptr sjtu::TTS::_add_user(const QString &name, int ID) {
 bool sjtu::TTS::load_binary() {
 	QString path = QDir::currentPath();
 	path += "/../train-ticket-system/data/";
-    path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/";
-
+//    path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/";
+    path = "/f/programing/#Ticket/train-ticket-system/";
     QString id_cnt_file_name = "id_cnt.dat";
     QFile id_cnt_file(path + id_cnt_file_name);
     if(!id_cnt_file.open(QIODevice::ReadOnly)) return false;
