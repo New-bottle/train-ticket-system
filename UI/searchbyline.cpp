@@ -30,7 +30,7 @@ void searchbyline::on_pushButton_2_clicked()
 void searchbyline::on_pushButton_clicked()
 {
     ui->tableWidget->clear();
-    sjtu::check_line_ans ans = tts.check_line(ui->train_name->text());
+//    sjtu::check_line_ans ans = tts.check_line(ui->train_name->text());
 
     /*QTableWidgetItem one = new QTableWidgetItem("站名");
     QTableWidgetItem two = new QTableWidgetItem("日期");
