@@ -30,7 +30,6 @@ void adminaddtrain::on_pushButton_clicked()
     if(success)
     {
         QMessageBox::information(this, tr("添加成功"),tr("新的车次已被载入"),QMessageBox::Yes);
-
     }
     else
     {
