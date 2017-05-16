@@ -4,6 +4,7 @@
 #include "adminadd.h"
 #include "adminstartend.h"
 #include "admincheckuser.h"
+#include "adminaddtrain.h"
 
 adminmainwindow::adminmainwindow(QWidget *parent) :
     QDialog(parent),
@@ -39,4 +40,10 @@ void adminmainwindow::on_pushButton_5_clicked()
 {
     admincheckuser a_che;
     a_che.exec();
+}
+
+void adminmainwindow::on_pushButton_4_clicked()
+{
+    adminaddtrain a_add;
+    a_add.exec();
 }

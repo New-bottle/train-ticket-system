@@ -49,7 +49,8 @@ SOURCES +=\
     UI/userchangepwd.cpp \
     UI/adminstartend.cpp \
     UI/searchbyline.cpp \
-    UI/admincheckuser.cpp
+    UI/admincheckuser.cpp \
+    UI/adminaddtrain.cpp
 
 HEADERS  += \
     vector.hpp \
@@ -85,7 +86,8 @@ HEADERS  += \
     UI/userchangepwd.h \
     UI/adminstartend.h \
     UI/searchbyline.h \
-    UI/admincheckuser.h
+    UI/admincheckuser.h \
+    UI/adminaddtrain.h
 
 FORMS    += \
     UI/adminadd.ui \
@@ -108,7 +110,8 @@ FORMS    += \
     UI/userchangepwd.ui \
     UI/adminstartend.ui \
     UI/searchbyline.ui \
-    UI/admincheckuser.ui
+    UI/admincheckuser.ui \
+    UI/adminaddtrain.ui
 
 DISTFILES += \
     log.txt

@@ -142,9 +142,12 @@ struct add_line_data
     }
 };
 
-struct add_train_data {
+struct add_train_data
+{
     QString line_name;
     int ldata, rdata;
+    add_train_data(QString a, int b, int c):
+        line_name(a), ldata(b), rdata(c){}
 };
 typedef bool add_train_ans;
 
