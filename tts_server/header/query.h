@@ -188,6 +188,18 @@ struct check_line_ans {
 
 };
 
+struct check_train_data {
+    QString line_name;
+    int date;
+};
+struct check_train_ans {
+    // 如果无此车次，line_name = "*"
+    QString line_name;
+    QString date; // 2017.01.01
+    bool selling;
+    vector<vector<int>> station_available_tickets;
+};
+
 int transfer_date(const QString & str);
 
 /*函数接口名

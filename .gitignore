@@ -5,3 +5,4 @@ cmake-build-debug/
 test/
 header_structure.txt
 train-ticket-system.*
+\log
