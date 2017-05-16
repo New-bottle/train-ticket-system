@@ -26,7 +26,7 @@ userbuy::userbuy(QWidget *parent) :
     ui->setupUi(this);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableWidget->setSortingEnabled(true);
+    ui->tableWidget->setSortingEnabled(false);
 //    ui->tableWidget->setModel(model);
 }
 
@@ -35,23 +35,6 @@ userbuy::~userbuy()
     delete ui;
 }
 
-/*
-void userbuy::on_pushButton_clicked()
-{
-    usermainwindow u_main;
-    u_main.show();
-}
-
-void userbuy::on_pushButton_2_clicked()
-{
-    userticket u_tic;
-    u_tic.show();
-}
-
-void userbuy::on_comboBox_activated(const QString &arg1){}
-
-void userbuy::on_pushButton_6_clicked(){}
-*/
 void userbuy::on_search_by_station_clicked()
 {
 

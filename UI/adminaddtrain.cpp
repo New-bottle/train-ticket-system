@@ -2,6 +2,7 @@
 #include "ui_adminaddtrain.h"
 #include "../tts_server/header/query.h"
 #include "../tts_server/header/server.h"
+#include <QMessageBox>
 
 extern sjtu::TTS tts;
 
@@ -33,7 +34,7 @@ void adminaddtrain::on_pushButton_clicked()
     }
     else
     {
-        MessageBox::warning(this, tr("添加失败"),tr("您可尝试重新添加"),QMessageBox::Yes);
+        QMessageBox::warning(this, tr("添加失败"),tr("您可尝试重新添加"),QMessageBox::Yes);
     }
 
 }
