@@ -160,13 +160,16 @@ struct start_selling_data {
     QString line_name;
     int date;
     start_selling_data(QString a, int b):
-        line_name(a), data(b){}
+        line_name(a), date(b){}
 };
 typedef bool start_selling_ans;
 
 struct end_selling_data {
     QString line_name;
     int date;
+
+    end_selling_data(const QString &str, int data)
+        : line_name(str), date(data) {}
 };
 typedef bool end_selling_ans;
 
@@ -190,6 +193,18 @@ struct check_line_ans {
     vector<int> dep_time;
     vector<vector<double>> price;
 
+};
+
+struct check_train_data {
+    QString line_name;
+    int date;
+};
+struct check_train_ans {
+    // 如果无此车次，line_name = "*"
+    QString line_name;
+    QString date; // 2017.01.01
+    bool selling;
+    vector<vector<int>> station_available_tickets;
 };
 
 int transfer_date(const QString & str);

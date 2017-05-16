@@ -155,9 +155,8 @@ public:
 
 public:
     /// API
-    void add_log(const QString &log) {
-        logs.push_back(log);
-    }
+    void add_system_log(const QString &log);
+    void add_user_long(const QString &log, int ID);
     vector<query_ticket_ans> query_city_city(const query_ticket_cc_data & data);
     vector<query_ticket_ans> query_station_station(const query_ticket_ss_data & data);
     vector<query_my_order_ans> query_my_order(const query_my_order_data & data);
@@ -170,13 +169,13 @@ public:
     register_user_ans register_user(const register_user_data & data);
     register_admin_ans register_admin(const register_admin_data & data);
     add_train_ans add_train(const add_train_data & data);
-    // todo
     change_password_ans change_password(const change_password_data & data);
     start_selling_ans start_selling(const start_selling_data & data);
     end_selling_ans end_selling(const end_selling_data & data);
     check_user_ans check_user(const check_user_data & data);
     check_line_ans check_line(const check_line_data &data);
-
+    // todo
+    check_train_ans check_train(const check_train_data & data);
 };
 }
 

@@ -107,7 +107,7 @@ sjtu::TTS::query_train(const sjtu::City &from, const sjtu::City &to, sjtu::Date 
     for (from_station = from.stations.cbegin(); from_station != from.stations.cend() ; ++from_station) {
         vector<line_ptr>::const_iterator cur_line;
         for (cur_line = (*from_station)->lines.cbegin(); cur_line != (*from_station)->lines.cend(); ++cur_line) {
-            if (!(*cur_line)->check_date(date) || !(*cur_line)->trains[data]->selling) {
+            if (!(*cur_line)->check_date(date) || !(*cur_line)->trains[date]->selling) {
                 continue;
             }
             vector<station_ptr>::const_iterator cur_station = (*cur_line)->stations.cbegin();
@@ -115,13 +115,14 @@ sjtu::TTS::query_train(const sjtu::City &from, const sjtu::City &to, sjtu::Date 
                 ++cur_station;
             }
             while (cur_station != (*cur_line)->stations.cend()) {
-                if ((*cur_station)->location->name != to.name) {
+                if ((*cur_station)->location->name == to.name) {
                     break;
                 }
                 ++cur_station;
             }
             if (cur_station != (*cur_line)->stations.cend()) {
                 result->push_back((*cur_line)->trains[date]);
+                std::cout << result->back()->date.toStr().toUtf8().constData() << std::endl;
             }
         }
     }
@@ -514,6 +515,15 @@ sjtu::TTS::~TTS() {
 }
 
 
+void add_system_log(const QString &log) {
+
+}
+
+void add_user_long(const QString &log, int ID) {
+
+}
+
+
 bool sjtu::TTS::add_line(const sjtu::TTS::LineData &line_data) {
     // station
     line_ptr line = memory_pool<Line>::get_T();
@@ -539,15 +549,21 @@ bool sjtu::TTS::add_line(const sjtu::TTS::LineData &line_data) {
         line->stations.back()->lines.push_back(line);
     }
 
+    if (line->name == "G8903")
+        std::cout << 1;
+
     // trains
     Date l(20170328);
     for (int i = 0; i < 30; ++i) {
         train_ptr train = memory_pool<Train>::get_T();
         train->init(line, l);
         train->selling = 1;
-        line->trains.insert(make_pair(l, train));
+        auto t = line->trains.insert(make_pair(l, train)).second;
         l.incre_day();
     }
+
+    bool flag = server.add_line(line);
+    auto linet = server.find_line(line->name);
 
     return server.add_line(line);
 }
@@ -770,12 +786,10 @@ sjtu::vector<QString> sjtu::TTS::q_ss(const QString &f, const QString &t, int da
 }
 
 
-
-
 sjtu::vector<sjtu::query_ticket_ans> sjtu::TTS::query_city_city(const sjtu::query_ticket_cc_data & data) {
     QString path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/log.txt";
     QFile log_file(path);
-    log_file.open(QIODevice::WriteOnly, QIODevice::Append);
+    log_file.open(QIODevice::WriteOnly| QIODevice::Append);
     log_file.flush();
     QTextStream log_fout(&log_file);
     log_fout << "查询：在" + Date(data.date).toStr() + "从" + data.dep_city + "到" + data.arr_city <<  "的车次。\n";
@@ -788,6 +802,9 @@ sjtu::vector<sjtu::query_ticket_ans> sjtu::TTS::query_city_city(const sjtu::quer
     const City & to   = *server.find_city(data.arr_city);
     smart_ptr<vector<train_ptr>>  trains_p = query_train(from, to, Date(data.date));
     const vector<train_ptr> &trains = *trains_p;
+    for (int i = 0; i < trains.size(); ++i) {
+        std::cout << trains[i]->line->name.toUtf8().constData() << ' ' << trains[i]->date.toStr().toUtf8().constData() << std::endl;
+    }
 
     for (int i = 0; i < (int)trains.size(); ++i) {
         Train & train = *trains[i];
@@ -811,7 +828,7 @@ sjtu::vector<sjtu::query_ticket_ans> sjtu::TTS::query_city_city(const sjtu::quer
 sjtu::vector<sjtu::query_ticket_ans> sjtu::TTS::query_station_station(const sjtu::query_ticket_ss_data & data) {
     QString path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/log.txt";
     QFile log_file(path);
-    log_file.open(QIODevice::WriteOnly, QIODevice::Append);
+    log_file.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream log_fout(&log_file);
     log_file.flush();
     log_fout << "查询：在" + Date(data.date).toStr() + "从" + data.dep_satation + "到" + data.arr_station <<  "的车次。\n";
@@ -849,14 +866,14 @@ sjtu::vector<sjtu::query_my_order_ans> sjtu::TTS::query_my_order(const sjtu::que
 
     QString path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/log.txt";
     QFile log_file(path);
-    log_file.open(QIODevice::WriteOnly, QIODevice::Append);
+    log_file.open(QIODevice::WriteOnly | QIODevice::Append);
     log_file.flush();
     QTextStream log_fout(&log_file);
     log_fout << user->name << "(" << user->ID << ")" << QString("查询了自己的订单\n");
 
     path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/users/"+ QString::number(user->ID) +"log.txt";
     QFile user_file(path);
-    user_file.open(QIODevice::WriteOnly, QIODevice::Append);
+    user_file.open(QIODevice::WriteOnly | QIODevice::Append);
     user_file.flush();
     QTextStream user_fout(&user_file);
     user_fout << user->name << "(" << user->ID << ")" << QString("查询了自己的订单\n");
@@ -881,7 +898,7 @@ sjtu::vector<sjtu::query_my_order_ans> sjtu::TTS::query_my_order(const sjtu::que
 sjtu::login_user_ans sjtu::TTS::login_user(const sjtu::login_user_data & data) {
     QString path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/log.txt";
     QFile log_file(path);
-    log_file.open(QIODevice::WriteOnly, QIODevice::Append);
+    log_file.open(QIODevice::WriteOnly | QIODevice::Append);
     log_file.flush();
     QTextStream log_fout(&log_file);
 
@@ -903,7 +920,7 @@ sjtu::login_user_ans sjtu::TTS::login_user(const sjtu::login_user_data & data) {
 sjtu::login_admin_ans sjtu::TTS::login_admin(const sjtu::login_admin_data & data) {
     QString path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/log.txt";
     QFile log_file(path);
-    log_file.open(QIODevice::WriteOnly, QIODevice::Append);
+    log_file.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream log_fout(&log_file);
     log_file.flush();
     log_fout << data.ID << QString("尝试管理员登录……");
@@ -925,7 +942,7 @@ sjtu::return_tickets_ans sjtu::TTS::return_tickets(const sjtu::return_tickets_da
 
     QString path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/log.txt";
     QFile log_file(path);
-    log_file.open(QIODevice::WriteOnly, QIODevice::Append);
+    log_file.open(QIODevice::WriteOnly | QIODevice::Append);
     log_file.flush();
     QTextStream log_fout(&log_file);
 
@@ -936,7 +953,7 @@ sjtu::return_tickets_ans sjtu::TTS::return_tickets(const sjtu::return_tickets_da
 
     path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/users/"+ QString::number(user.ID) +"log.txt";
     QFile user_file(path);
-    user_file.open(QIODevice::WriteOnly, QIODevice::Append);
+    user_file.open(QIODevice::WriteOnly | QIODevice::Append);
     user_file.flush();
     QTextStream user_fout(&user_file);
     user_fout << user.name << "(" << user.ID <<")" << QString("退票:\n");
@@ -986,7 +1003,7 @@ sjtu::buy_tickets_ans sjtu::TTS::buy_tickets(const sjtu::buy_tickets_data & data
     QString path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/log.txt";
     QFile log_file(path);
 
-    if(!log_file.open(QIODevice::WriteOnly, QIODevice::Append))
+    if(!log_file.open(QIODevice::WriteOnly | QIODevice::Append))
         throw;
     log_file.flush();
     QTextStream log_fout(&log_file);
@@ -997,7 +1014,7 @@ sjtu::buy_tickets_ans sjtu::TTS::buy_tickets(const sjtu::buy_tickets_data & data
 
     path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/users/"+ QString::number(user.ID) +"log.txt";
     QFile user_file(path);
-    if(!user_file.open(QIODevice::WriteOnly, QIODevice::Append))
+    if(!user_file.open(QIODevice::WriteOnly | QIODevice::Append))
         throw ;
     user_file.flush();
     QTextStream user_fout(&user_file);
@@ -1010,10 +1027,13 @@ sjtu::buy_tickets_ans sjtu::TTS::buy_tickets(const sjtu::buy_tickets_data & data
 
 
     Line &line = *server.find_line(data.train_name);
-    if (!line.check_date(Date(data.start_date)))
+    if (!line.check_date(Date(data.start_date))) {
+        log_fout << QString("购票失败。\n");
         return false;
+    }
     Train &train = *(line.trains[Date(data.start_date)]);
     if (train.min_avail(data.start_station, data.end_station, data.seat_kind) < data.ticket_num) {
+        log_fout << QString("购票失败。\n");
         return false;
     }
     ticket_ptr tmp = memory_pool<Ticket>::get_T();
@@ -1024,8 +1044,8 @@ sjtu::buy_tickets_ans sjtu::TTS::buy_tickets(const sjtu::buy_tickets_data & data
     train.add_tickets(data.start_station, data.end_station, data.seat_kind,-data.ticket_num);
     for (auto iter = user.tickets.begin(); iter != user.tickets.end(); ++iter) {
         if ((*iter)->equal_ex_num(*tmp)) {
-            log_fout << "购票成功。\n";
-            user_fout << "购票成功。\n";
+            log_fout << QString("购票成功。\n");
+            user_fout << QString("购票成功。\n");
             (*iter)->num += data.ticket_num;
             return true;
         }
@@ -1033,15 +1053,15 @@ sjtu::buy_tickets_ans sjtu::TTS::buy_tickets(const sjtu::buy_tickets_data & data
     tmp->price = train.calulate_price(data.start_station, data.end_station, data.seat_kind);
     tmp->num = data.ticket_num;
     user.tickets.push_back(tmp);
-    log_fout << "购票成功。\n";
-    user_fout << "购票成功。\n";
+    log_fout << QString("购票成功。\n");
+    user_fout << QString("购票成功。\n");
     return true;
 }
 
 sjtu::delete_line_ans sjtu::TTS::delete_line(const sjtu::delete_line_data & data) {
     QString path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/log.txt";
     QFile log_file(path);
-    log_file.open(QIODevice::WriteOnly, QIODevice::Append);
+    log_file.open(QIODevice::WriteOnly | QIODevice::Append);
     log_file.flush();
     QTextStream log_fout(&log_file);
     log_fout << QString("管理员删除了线路") << data << endl;
@@ -1061,10 +1081,12 @@ sjtu::register_user_ans sjtu::TTS::register_user(const sjtu::register_user_data 
 
     QString path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/log.txt";
     QFile log_file(path);
-    log_file.open(QIODevice::WriteOnly, QIODevice::Append);
+    log_file.open(QIODevice::WriteOnly | QIODevice::Append);
     log_file.flush();
     QTextStream log_fout(&log_file);
     log_fout << QString("用户注册：") << data.name << QString(" ID：") << ID << endl;
+    log_fout.flush();
+    log_file.close();
     return ID;
 }
 
@@ -1072,18 +1094,19 @@ sjtu::register_admin_ans sjtu::TTS::register_admin(const sjtu::register_admin_da
     int ID = register_admin(data.name, data.password);
     QString path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/log.txt";
     QFile log_file(path);
-    log_file.open(QIODevice::WriteOnly, QIODevice::Append);
+    log_file.open(QIODevice::WriteOnly | QIODevice::Append);
     log_file.flush();
     QTextStream log_fout(&log_file);
     log_fout << QString("管理员注册：") << data.name << QString(" ID：") << ID << endl;
-
+    log_fout.flush();
+    log_file.close();
     return register_admin(data.name, data.password);
 }
 
 sjtu::add_train_ans sjtu::TTS::add_train(const sjtu::add_train_data & data) {
     QString path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/log.txt";
     QFile log_file(path);
-    log_file.open(QIODevice::WriteOnly, QIODevice::Append);
+    log_file.open(QIODevice::WriteOnly | QIODevice::Append);
     log_file.flush();
     QTextStream log_fout(&log_file);
     log_fout << QString("添加车次")
@@ -1108,8 +1131,24 @@ sjtu::add_train_ans sjtu::TTS::add_train(const sjtu::add_train_data & data) {
 
 sjtu::change_password_ans sjtu::TTS::change_password(const sjtu::change_password_data & data) {
     // TODO log
-
     auto user = server.find_user(data.ID);
+
+    QString path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/log.txt";
+    QFile log_file(path);
+    log_file.open(QIODevice::WriteOnly| QIODevice::Append);
+    log_file.flush();
+    QTextStream log_fout(&log_file);
+    log_fout << QString("用户") << user->ID << QString("修改了密码\n");
+
+    path = "/Users/aaronren/Projects/CLionProjects/train-ticket-system/log/users/"+ QString::number(user->ID) +"log.txt";
+    QFile user_file(path);
+    if(!user_file.open(QIODevice::WriteOnly | QIODevice::Append))
+        throw ;
+    user_file.flush();
+    QTextStream user_fout(&user_file);
+    user_fout << QString("修改了密码。\n");
+
+
     user->password = data.new_password;
     return true;
 }
@@ -1145,6 +1184,19 @@ sjtu::check_line_ans sjtu::TTS::check_line(const sjtu::check_line_data &data) {
     return tmp;
 }
 
+sjtu::check_train_ans sjtu::TTS::check_train(const sjtu::check_train_data & data) {
+    check_train_ans tmp;
+    if (!server.check_line(data.line_name)) {
+        tmp.line_name = "*";
+        return tmp;
+    }
+    Train & train = *server.find_line(data.line_name)->trains[Date(data.date)];
+    tmp.line_name = data.line_name;
+    tmp.date = train.date.toStr();
+    tmp.selling = train.selling;
+    tmp.station_available_tickets = train.station_available_tickets;
+    return tmp;
+}
 
 
 
