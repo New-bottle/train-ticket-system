@@ -160,13 +160,16 @@ struct start_selling_data {
     QString line_name;
     int date;
     start_selling_data(QString a, int b):
-        line_name(a), data(b){}
+        line_name(a), date(b){}
 };
 typedef bool start_selling_ans;
 
 struct end_selling_data {
     QString line_name;
     int date;
+
+    end_selling_data(const QString &str, int data)
+        : line_name(str), date(data) {}
 };
 typedef bool end_selling_ans;
 

@@ -115,13 +115,14 @@ sjtu::TTS::query_train(const sjtu::City &from, const sjtu::City &to, sjtu::Date 
                 ++cur_station;
             }
             while (cur_station != (*cur_line)->stations.cend()) {
-                if ((*cur_station)->location->name != to.name) {
+                if ((*cur_station)->location->name == to.name) {
                     break;
                 }
                 ++cur_station;
             }
             if (cur_station != (*cur_line)->stations.cend()) {
                 result->push_back((*cur_line)->trains[date]);
+                std::cout << result->back()->date.toStr().toUtf8().constData() << std::endl;
             }
         }
     }
@@ -548,15 +549,21 @@ bool sjtu::TTS::add_line(const sjtu::TTS::LineData &line_data) {
         line->stations.back()->lines.push_back(line);
     }
 
+    if (line->name == "G8903")
+        std::cout << 1;
+
     // trains
     Date l(20170328);
     for (int i = 0; i < 30; ++i) {
         train_ptr train = memory_pool<Train>::get_T();
         train->init(line, l);
         train->selling = 1;
-        line->trains.insert(make_pair(l, train));
+        auto t = line->trains.insert(make_pair(l, train)).second;
         l.incre_day();
     }
+
+    bool flag = server.add_line(line);
+    auto linet = server.find_line(line->name);
 
     return server.add_line(line);
 }

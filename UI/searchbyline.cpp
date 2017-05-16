@@ -29,6 +29,7 @@ void searchbyline::on_pushButton_2_clicked()
 
 void searchbyline::on_pushButton_clicked()
 {
+    /*
     ui->tableWidget->clear();
     sjtu::check_line_ans ans = tts.check_line(ui->train_name->text());
     QTableWidgetItem one = new QTableWidgetItem("站名");
@@ -40,4 +41,5 @@ void searchbyline::on_pushButton_clicked()
     QTableWidgetItem one = new QTableWidgetItem("站名");
     QTableWidgetItem one = new QTableWidgetItem("站名");
     ui->tableWidget->setHorizontalHeaderItem();
+    */
 }
